@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RezTeam — سرمایه‌گذاری هوشمند</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Vazirmatn', sans-serif; background: #f5f5f3; color: #1a1a1a; direction: rtl; }
+
+  /* NAV */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 32px; background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 20px; font-weight: 700; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
+  .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: #1D9E75; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-link { font-size: 14px; color: #666; cursor: pointer; text-decoration: none; }
+  .nav-link:hover { color: #1D9E75; }
+  .nav-btns { display: flex; gap: 10px; }
+  .btn { padding: 8px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; border: 1px solid #ddd; background: transparent; color: #1a1a1a; }
+  .btn:hover { background: #f5f5f3; }
+  .btn.primary { background: #1D9E75; color: #fff; border-color: #1D9E75; }
+  .btn.primary:hover { background: #0F6E56; }
+
+  /* TABS */
+  .tab-bar { display: flex; gap: 4px; padding: 0 32px; background: #fff; border-bottom: 1px solid #e8e8e8; }
+  .tab { font-size: 14px; padding: 12px 18px; cursor: pointer; color: #888; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tab.active { color: #0F6E56; border-bottom-color: #1D9E75; font-weight: 500; }
+  .tab:hover { color: #1D9E75; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HOME */
+  .hero { text-align: center; padding: 64px 32px 48px; background: #fff; border-bottom: 1px solid #e8e8e8; }
+  .hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 14px; }
+  .hero p { font-size: 16px; color: #666; max-width: 500px; margin: 0 auto 28px; line-height: 1.8; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; }
+  .btn-green { background: #1D9E75; color: #fff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-weight: 500; }
+  .btn-green:hover { background: #0F6E56; }
+  .btn-outline { background: transparent; color: #1a1a1a; border: 1px solid #ddd; padding: 12px 28px; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; }
+  .btn-outline:hover { background: #f5f5f3; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 32px; max-width: 900px; margin: 0 auto; }
+  .stat-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e8e8e8; }
+  .stat-label { font-size: 13px; color: #888; margin-bottom: 8px; }
+  .stat-val { font-size: 26px; font-weight: 700; color: #1a1a1a; }
+  .stat-sub { font-size: 12px; color: #1D9E75; margin-top: 4px; }
+
+  .section { padding: 0 32px 32px; max-width: 900px; margin: 0 auto; }
+  .section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+  .invest-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .invest-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+  .invest-card:hover { border-color: #1D9E75; box-shadow: 0 2px 12px rgba(29,158,117,0.08); }
+  .invest-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 20px; }
+  .invest-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .invest-return { font-size: 13px; color: #1D9E75; font-weight: 500; }
+  .invest-min { font-size: 12px; color: #888; margin-top: 4px; }
+
+  /* REGISTER */
+  .form-wrap { padding: 40px 32px; display: flex; justify-content: center; }
+  .form-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 16px; padding: 32px; width: 100%; max-width: 440px; }
+  .form-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .form-sub { font-size: 14px; color: #888; margin-bottom: 24px; }
+  .field { margin-bottom: 16px; }
+  .field label { font-size: 13px; color: #555; display: block; margin-bottom: 6px; font-weight: 500; }
+  .field input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; color: #1a1a1a; background: #fafafa; outline: none; }
+  .field input:focus { border-color: #1D9E75; background: #fff; }
+  .full-btn { width: 100%; padding: 12px; background: #1D9E75; color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-weight: 600; margin-top: 8px; }
+  .full-btn:hover { background: #0F6E56; }
+  .or-line { text-align: center; font-size: 13px; color: #888; margin: 16px 0 0; }
+  .or-line span { color: #1D9E75; cursor: pointer; font-weight: 500; }
+  .notice { background: #E1F5EE; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #085041; margin-top: 16px; line-height: 1.6; }
+
+  /* DASHBOARD */
+  .dash-header { padding: 24px 32px; background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; justify-content: space-between; align-items: center; }
+  .dash-title { font-size: 20px; font-weight: 700; }
+  .dash-sub { font-size: 13px; color: #888; margin-top: 2px; }
+  .badge { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
+  .badge.green { background: #E1F5EE; color: #0F6E56; }
+  .badge.amber { background: #FAEEDA; color: #854F0B; }
+  .badge.red { background: #FCEBEB; color: #A32D2D; }
+  .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 24px 32px; }
+  .portfolio-section { padding: 0 32px 32px; }
+  .portfolio-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
+  .portfolio-row { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
+  .portfolio-row:last-child { border-bottom: none; }
+  .p-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .p-info { flex: 1; }
+  .p-name { font-size: 15px; font-weight: 600; }
+  .p-detail { font-size: 12px; color: #888; margin-top: 2px; }
+  .p-val { text-align: left; }
+  .p-amount { font-size: 15px; font-weight: 600; }
+  .p-return { font-size: 12px; color: #1D9E75; font-weight: 500; margin-top: 2px; }
+
+  /* ADMIN */
+  .admin-header { padding: 24px 32px; background: #fff; border-bottom: 1px solid #e8e8e8; }
+  .admin-title { font-size: 20px; font-weight: 700; }
+  .admin-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 24px 32px; }
+  .admin-stat { background: #fff; border-radius: 10px; padding: 16px; border: 1px solid #e8e8e8; }
+  .admin-stat .lbl { font-size: 12px; color: #888; margin-bottom: 6px; }
+  .admin-stat .val { font-size: 22px; font-weight: 700; }
+  .table-section { padding: 0 32px 32px; }
+  .table-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
+  .table-head { display: grid; grid-template-columns: 2fr 1.2fr 1.2fr 1fr 1fr; padding: 12px 20px; background: #f9f9f7; font-size: 12px; color: #888; font-weight: 600; border-bottom: 1px solid #e8e8e8; }
+  .table-row { display: grid; grid-template-columns: 2fr 1.2fr 1.2fr 1fr 1fr; padding: 14px 20px; border-bottom: 1px solid #f0f0f0; font-size: 14px; align-items: center; }
+  .table-row:last-child { border-bottom: none; }
+  .table-row:hover { background: #fafafa; }
+  .action-btns { display: flex; gap: 6px; }
+  .action-btn { font-size: 11px; padding: 4px 10px; border-radius: 6px; border: none; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-weight: 500; }
+  .action-btn.approve { background: #E1F5EE; color: #0F6E56; }
+  .action-btn.reject { background: #FCEBEB; color: #A32D2D; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><div class="logo-dot"></div> RezTeam</div>
+  <div class="nav-links">
+    <a class="nav-link" onclick="showPage('home')">صفحه اصلی</a>
+    <a class="nav-link">فرصت‌ها</a>
+    <a class="nav-link">درباره ما</a>
+    <a class="nav-link">تماس</a>
+  </div>
+  <div class="nav-btns">
+    <button class="btn" onclick="showPage('register')">ورود</button>
+    <button class="btn primary" onclick="showPage('register')">ثبت‌نام</button>
+  </div>
+</nav>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab(this,'home')">صفحه اصلی</div>
+  <div class="tab" onclick="switchTab(this,'register')">ثبت‌نام</div>
+  <div class="tab" onclick="switchTab(this,'dashboard')">داشبورد کاربر</div>
+  <div class="tab" onclick="switchTab(this,'admin')">پنل مدیریت</div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="hero">
+    <h1>سرمایه‌گذاری هوشمند با RezTeam</h1>
+    <p>با سرمایه‌گذاری در پروژه‌های ما، از سود ماهانه مطمئن بهره‌مند شوید. طلا، فروشگاه‌ها و فرصت‌های بیشتر.</p>
+    <div class="hero-btns">
+      <button class="btn-green" onclick="switchTabByName('register')">همین الان شروع کنید</button>
+      <button class="btn-outline" onclick="switchTabByName('dashboard')">مشاهده فرصت‌ها</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">کل سرمایه‌گذاری</div>
+      <div class="stat-val">۴۲ میلیارد</div>
+      <div class="stat-sub">تومان</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">سرمایه‌گذاران فعال</div>
+      <div class="stat-val">۱,۲۸۴</div>
+      <div class="stat-sub">نفر</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">میانگین سود ماهانه</div>
+      <div class="stat-val">۳.۲٪</div>
+      <div class="stat-sub">ماهانه</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">فرصت‌های سرمایه‌گذاری</div>
+    <div class="invest-grid">
+      <div class="invest-card">
+        <div class="invest-icon" style="background:#E1F5EE;">🥇</div>
+        <div class="invest-name">سرمایه‌گذاری طلا</div>
+        <div class="invest-return">سود ماهانه: ۲.۵٪ تا ۴٪</div>
+        <div class="invest-min">حداقل سرمایه: ۵ میلیون تومان</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon" style="background:#E6F1FB;">🏪</div>
+        <div class="invest-name">فروشگاه‌های زنجیره‌ای</div>
+        <div class="invest-return">سود ماهانه: ۳٪ تا ۵٪</div>
+        <div class="invest-min">حداقل سرمایه: ۱۰ میلیون تومان</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon" style="background:#FAEEDA;">🏗️</div>
+        <div class="invest-name">پروژه‌های ساختمانی</div>
+        <div class="invest-return">سود ماهانه: ۴٪ تا ۶٪</div>
+        <div class="invest-min">حداقل سرمایه: ۵۰ میلیون تومان</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon" style="background:#EEEDFE;">💼</div>
+        <div class="invest-name">صندوق مشترک</div>
+        <div class="invest-return">سود ماهانه: ۲٪ تا ۳.۵٪</div>
+        <div class="invest-min">حداقل سرمایه: ۱ میلیون تومان</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER -->
+<div id="register" class="page">
+  <div class="form-wrap">
+    <div class="form-card">
+      <div class="form-title">ثبت‌نام در RezTeam</div>
+      <div class="form-sub">حساب کاربری بسازید و سرمایه‌گذاری را شروع کنید</div>
+      <div class="field"><label>نام و نام خانوادگی</label><input type="text" placeholder="رضا احمدی" /></div>
+      <div class="field"><label>شماره موبایل</label><input type="text" placeholder="09123456789" /></div>
+      <div class="field"><label>ایمیل</label><input type="email" placeholder="example@email.com" /></div>
+      <div class="field"><label>کد ملی</label><input type="text" placeholder="0123456789" /></div>
+      <div class="field"><label>رمز عبور</label><input type="password" placeholder="حداقل ۸ کاراکتر" /></div>
+      <button class="full-btn">ثبت‌نام</button>
+      <div class="or-line">حساب دارید؟ <span onclick="showPage('dashboard')">وارد شوید</span></div>
+      <div class="notice">حساب شما پس از بررسی و تأیید توسط تیم ما فعال می‌شود.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="page">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">خوش آمدید، رضا</div>
+      <div class="dash-sub">آخرین ورود: امروز، ۱۴:۳۲</div>
+    </div>
+    <span class="badge green">حساب تأیید شده</span>
+  </div>
+  <div class="dash-stats">
+    <div class="stat-card">
+      <div class="stat-label">کل سرمایه</div>
+      <div class="stat-val">۸۵ میلیون</div>
+      <div class="stat-sub">تومان</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">سود این ماه</div>
+      <div class="stat-val">۲.۸ میلیون</div>
+      <div class="stat-sub">+۳.۳٪</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">پرداخت بعدی</div>
+      <div class="stat-val">۱۲ روز</div>
+      <div class="stat-sub">دیگر</div>
+    </div>
+  </div>
+  <div class="portfolio-section">
+    <div class="section-title">پرتفوی من</div>
+    <div class="portfolio-card">
+      <div class="portfolio-row">
+        <div class="p-icon" style="background:#E1F5EE;">🥇</div>
+        <div class="p-info">
+          <div class="p-name">طلا</div>
+          <div class="p-detail">۳ ماه فعال · سود ماهانه ۳.۲٪</div>
+        </div>
+        <div class="p-val">
+          <div class="p-amount">۵۰ میلیون</div>
+          <div class="p-return">+۱.۶ میلیون سود</div>
+        </div>
+      </div>
+      <div class="portfolio-row">
+        <div class="p-icon" style="background:#E6F1FB;">🏪</div>
+        <div class="p-info">
+          <div class="p-name">فروشگاه زنجیره‌ای</div>
+          <div class="p-detail">۱ ماه فعال · سود ماهانه ۴٪</div>
+        </div>
+        <div class="p-val">
+          <div class="p-amount">۳۵ میلیون</div>
+          <div class="p-return">+۱.۴ میلیون سود</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="page">
+  <div class="admin-header">
+    <div class="admin-title">پنل مدیریت</div>
+  </div>
+  <div class="admin-stats">
+    <div class="admin-stat"><div class="lbl">کاربران کل</div><div class="val">۱,۲۸۴</div></div>
+    <div class="admin-stat"><div class="lbl">در انتظار تأیید</div><div class="val" style="color:#854F0B;">۱۲</div></div>
+    <div class="admin-stat"><div class="lbl">سرمایه کل</div><div class="val">۴۲B</div></div>
+    <div class="admin-stat"><div class="lbl">سود پرداختی ماه</div><div class="val" style="color:#0F6E56;">۱.۳B</div></div>
+  </div>
+  <div class="table-section">
+    <div class="section-title">کاربران در انتظار تأیید</div>
+    <div class="table-card">
+      <div class="table-head">
+        <span>نام</span><span>موبایل</span><span>کد ملی</span><span>تاریخ</span><span>عملیات</span>
+      </div>
+      <div class="table-row">
+        <span>علی محمدی</span><span>0912…</span><span>0043…</span><span>۱۴۰۴/۰۴/۰۱</span>
+        <div class="action-btns"><button class="action-btn approve">تأیید</button><button class="action-btn reject">رد</button></div>
+      </div>
+      <div class="table-row">
+        <span>سارا کریمی</span><span>0935…</span><span>0021…</span><span>۱۴۰۴/۰۴/۰۲</span>
+        <div class="action-btns"><button class="action-btn approve">تأیید</button><button class="action-btn reject">رد</button></div>
+      </div>
+      <div class="table-row">
+        <span>مهدی رضایی</span><span>0901…</span><span>0087…</span><span>۱۴۰۴/۰۳/۲۸</span>
+        <div class="action-btns"><span class="badge green">تأیید شده</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const map = {home:0,register:1,dashboard:2,admin:3};
+  if(map[id] !== undefined) document.querySelectorAll('.tab')[map[id]].classList.add('active');
+}
+function switchTab(el, id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function switchTabByName(id) {
+  const map = {home:0,register:1,dashboard:2,admin:3};
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if(map[id] !== undefined) document.querySelectorAll('.tab')[map[id]].classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>
