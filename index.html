@@ -5,149 +5,178 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RezTeam — سرمایه‌گذاری هوشمند</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Vazirmatn', sans-serif; background: #f5f5f3; color: #1a1a1a; direction: rtl; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Vazirmatn', sans-serif; background: #f5f5f3; color: #1a1a1a; direction: rtl; }
 
-  /* NAV */
-  nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 32px; background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; }
-  .logo { font-size: 20px; font-weight: 700; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
-  .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: #1D9E75; }
-  .nav-links { display: flex; gap: 24px; }
-  .nav-link { font-size: 14px; color: #666; cursor: pointer; text-decoration: none; }
-  .nav-link:hover { color: #1D9E75; }
-  .nav-btns { display: flex; gap: 10px; }
-  .btn { padding: 8px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; border: 1px solid #ddd; background: transparent; color: #1a1a1a; }
-  .btn:hover { background: #f5f5f3; }
-  .btn.primary { background: #1D9E75; color: #fff; border-color: #1D9E75; }
-  .btn.primary:hover { background: #0F6E56; }
+/* NAV */
+nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 32px; background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; }
+.logo { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.logo-dot { width: 10px; height: 10px; border-radius: 50%; background: #1D9E75; }
+.nav-links { display: flex; gap: 24px; }
+.nav-link { font-size: 14px; color: #666; cursor: pointer; text-decoration: none; }
+.nav-link:hover { color: #1D9E75; }
+.nav-btns { display: flex; gap: 10px; }
+.btn { padding: 8px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; border: 1px solid #ddd; background: transparent; color: #1a1a1a; }
+.btn:hover { background: #f5f5f3; }
+.btn.primary { background: #1D9E75; color: #fff; border-color: #1D9E75; }
+.btn.primary:hover { background: #0F6E56; }
 
-  /* TABS */
-  .tab-bar { display: flex; gap: 4px; padding: 0 32px; background: #fff; border-bottom: 1px solid #e8e8e8; }
-  .tab { font-size: 14px; padding: 12px 18px; cursor: pointer; color: #888; border-bottom: 2px solid transparent; margin-bottom: -1px; }
-  .tab.active { color: #0F6E56; border-bottom-color: #1D9E75; font-weight: 500; }
-  .tab:hover { color: #1D9E75; }
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; }
 
-  /* PAGES */
-  .page { display: none; }
-  .page.active { display: block; }
+/* ===== صفحه اصلی ===== */
+.hero { text-align: center; padding: 64px 32px 48px; background: #fff; border-bottom: 1px solid #e8e8e8; }
+.hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 14px; }
+.hero p { font-size: 16px; color: #666; max-width: 500px; margin: 0 auto 28px; line-height: 1.8; }
+.hero-btns { display: flex; gap: 12px; justify-content: center; }
+.btn-green { background: #1D9E75; color: #fff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-weight: 500; }
+.btn-green:hover { background: #0F6E56; }
+.btn-outline { background: transparent; color: #1a1a1a; border: 1px solid #ddd; padding: 12px 28px; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; }
+.btn-outline:hover { background: #f5f5f3; }
+.home-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 32px; max-width: 900px; margin: 0 auto; }
+.stat-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e8e8e8; }
+.stat-label { font-size: 13px; color: #888; margin-bottom: 8px; }
+.stat-val { font-size: 26px; font-weight: 700; }
+.stat-sub { font-size: 12px; color: #1D9E75; margin-top: 4px; }
+.home-section { padding: 0 32px 32px; max-width: 900px; margin: 0 auto; }
+.section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.invest-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.invest-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+.invest-card:hover { border-color: #1D9E75; box-shadow: 0 2px 12px rgba(29,158,117,0.08); }
+.invest-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 20px; }
+.invest-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.invest-return { font-size: 13px; color: #1D9E75; font-weight: 500; }
+.invest-min { font-size: 12px; color: #888; margin-top: 4px; }
 
-  /* HOME */
-  .hero { text-align: center; padding: 64px 32px 48px; background: #fff; border-bottom: 1px solid #e8e8e8; }
-  .hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 14px; }
-  .hero p { font-size: 16px; color: #666; max-width: 500px; margin: 0 auto 28px; line-height: 1.8; }
-  .hero-btns { display: flex; gap: 12px; justify-content: center; }
-  .btn-green { background: #1D9E75; color: #fff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-weight: 500; }
-  .btn-green:hover { background: #0F6E56; }
-  .btn-outline { background: transparent; color: #1a1a1a; border: 1px solid #ddd; padding: 12px 28px; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; }
-  .btn-outline:hover { background: #f5f5f3; }
+/* ===== ثبت‌نام / ورود ===== */
+.form-wrap { padding: 48px 32px; display: flex; justify-content: center; }
+.form-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 16px; padding: 32px; width: 100%; max-width: 440px; }
+.form-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.form-sub { font-size: 14px; color: #888; margin-bottom: 24px; }
+.field { margin-bottom: 16px; }
+.field label { font-size: 13px; color: #555; display: block; margin-bottom: 6px; font-weight: 500; }
+.field input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; color: #1a1a1a; background: #fafafa; outline: none; }
+.field input:focus { border-color: #1D9E75; background: #fff; }
+.full-btn { width: 100%; padding: 12px; background: #1D9E75; color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-weight: 600; margin-top: 8px; }
+.full-btn:hover { background: #0F6E56; }
+.or-line { text-align: center; font-size: 13px; color: #888; margin: 16px 0 0; }
+.or-line span { color: #1D9E75; cursor: pointer; font-weight: 500; }
+.notice { background: #E1F5EE; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #085041; margin-top: 16px; line-height: 1.6; }
 
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 32px; max-width: 900px; margin: 0 auto; }
-  .stat-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e8e8e8; }
-  .stat-label { font-size: 13px; color: #888; margin-bottom: 8px; }
-  .stat-val { font-size: 26px; font-weight: 700; color: #1a1a1a; }
-  .stat-sub { font-size: 12px; color: #1D9E75; margin-top: 4px; }
+/* ===== ارتباط با ما ===== */
+.contact-wrap { padding: 48px 32px; display: flex; justify-content: center; }
+.contact-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 16px; padding: 36px; width: 100%; max-width: 480px; text-align: center; }
+.contact-title { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+.contact-sub { font-size: 14px; color: #888; margin-bottom: 32px; line-height: 1.7; }
+.contact-items { display: flex; flex-direction: column; gap: 16px; }
+.contact-item { display: flex; align-items: center; gap: 16px; background: #f9f9f7; border: 1px solid #e8e8e8; border-radius: 12px; padding: 16px 20px; text-align: right; }
+.contact-item-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.contact-item-info { flex: 1; }
+.contact-item-label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.contact-item-val { font-size: 15px; font-weight: 600; color: #1a1a1a; direction: ltr; text-align: right; }
 
-  .section { padding: 0 32px 32px; max-width: 900px; margin: 0 auto; }
-  .section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
-  .invest-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .invest-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
-  .invest-card:hover { border-color: #1D9E75; box-shadow: 0 2px 12px rgba(29,158,117,0.08); }
-  .invest-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 20px; }
-  .invest-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-  .invest-return { font-size: 13px; color: #1D9E75; font-weight: 500; }
-  .invest-min { font-size: 12px; color: #888; margin-top: 4px; }
+/* ===== پنل کاربری (با منوی کناری) ===== */
+.panel-layout { display: flex; min-height: calc(100vh - 57px); }
+.sidebar { width: 220px; background: #fff; border-left: 1px solid #e8e8e8; flex-shrink: 0; padding: 24px 0; }
+.sidebar-user { padding: 0 20px 20px; border-bottom: 1px solid #f0f0f0; margin-bottom: 12px; }
+.sidebar-name { font-size: 15px; font-weight: 600; }
+.sidebar-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #E1F5EE; color: #0F6E56; margin-top: 4px; }
+.sidebar-menu { list-style: none; }
+.sidebar-item { display: flex; align-items: center; gap: 10px; padding: 11px 20px; font-size: 14px; color: #555; cursor: pointer; border-right: 3px solid transparent; transition: all 0.15s; }
+.sidebar-item:hover { background: #f5f5f3; color: #1D9E75; }
+.sidebar-item.active { background: #E1F5EE; color: #0F6E56; font-weight: 600; border-right-color: #1D9E75; }
+.sidebar-item .s-icon { font-size: 18px; width: 22px; text-align: center; }
+.panel-content { flex: 1; padding: 28px; overflow-y: auto; }
+.panel-section { display: none; }
+.panel-section.active { display: block; }
 
-  /* REGISTER */
-  .form-wrap { padding: 40px 32px; display: flex; justify-content: center; }
-  .form-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 16px; padding: 32px; width: 100%; max-width: 440px; }
-  .form-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
-  .form-sub { font-size: 14px; color: #888; margin-bottom: 24px; }
-  .field { margin-bottom: 16px; }
-  .field label { font-size: 13px; color: #555; display: block; margin-bottom: 6px; font-weight: 500; }
-  .field input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; color: #1a1a1a; background: #fafafa; outline: none; }
-  .field input:focus { border-color: #1D9E75; background: #fff; }
-  .full-btn { width: 100%; padding: 12px; background: #1D9E75; color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-weight: 600; margin-top: 8px; }
-  .full-btn:hover { background: #0F6E56; }
-  .or-line { text-align: center; font-size: 13px; color: #888; margin: 16px 0 0; }
-  .or-line span { color: #1D9E75; cursor: pointer; font-weight: 500; }
-  .notice { background: #E1F5EE; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #085041; margin-top: 16px; line-height: 1.6; }
+/* داشبورد */
+.dash-greeting { margin-bottom: 24px; }
+.dash-greeting h2 { font-size: 22px; font-weight: 700; }
+.dash-greeting p { font-size: 14px; color: #888; margin-top: 4px; }
+.dash-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+.dash-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e8e8e8; }
+.dash-card .lbl { font-size: 12px; color: #888; margin-bottom: 8px; }
+.dash-card .val { font-size: 22px; font-weight: 700; }
+.dash-card .sub { font-size: 12px; color: #1D9E75; margin-top: 4px; }
+.portfolio-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
+.portfolio-row { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
+.portfolio-row:last-child { border-bottom: none; }
+.p-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.p-info { flex: 1; }
+.p-name { font-size: 14px; font-weight: 600; }
+.p-detail { font-size: 12px; color: #888; margin-top: 2px; }
+.p-val { text-align: left; }
+.p-amount { font-size: 14px; font-weight: 600; }
+.p-return { font-size: 12px; color: #1D9E75; font-weight: 500; margin-top: 2px; }
 
-  /* DASHBOARD */
-  .dash-header { padding: 24px 32px; background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; justify-content: space-between; align-items: center; }
-  .dash-title { font-size: 20px; font-weight: 700; }
-  .dash-sub { font-size: 13px; color: #888; margin-top: 2px; }
-  .badge { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
-  .badge.green { background: #E1F5EE; color: #0F6E56; }
-  .badge.amber { background: #FAEEDA; color: #854F0B; }
-  .badge.red { background: #FCEBEB; color: #A32D2D; }
-  .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 24px 32px; }
-  .portfolio-section { padding: 0 32px 32px; }
-  .portfolio-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
-  .portfolio-row { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
-  .portfolio-row:last-child { border-bottom: none; }
-  .p-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-  .p-info { flex: 1; }
-  .p-name { font-size: 15px; font-weight: 600; }
-  .p-detail { font-size: 12px; color: #888; margin-top: 2px; }
-  .p-val { text-align: left; }
-  .p-amount { font-size: 15px; font-weight: 600; }
-  .p-return { font-size: 12px; color: #1D9E75; font-weight: 500; margin-top: 2px; }
+/* فرصت‌های سرمایه‌گذاری */
+.opp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.opp-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 22px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+.opp-card:hover { border-color: #1D9E75; box-shadow: 0 2px 12px rgba(29,158,117,0.1); }
+.opp-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.opp-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.opp-name { font-size: 15px; font-weight: 700; }
+.opp-currency { font-size: 11px; color: #888; margin-top: 2px; }
+.opp-details { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.opp-detail-row { display: flex; justify-content: space-between; font-size: 13px; }
+.opp-detail-row .dk { color: #888; }
+.opp-detail-row .dv { font-weight: 600; color: #1a1a1a; }
+.opp-detail-row .dv.green { color: #0F6E56; }
+.opp-invest-btn { width: 100%; padding: 9px; background: #E1F5EE; color: #0F6E56; border: none; border-radius: 8px; font-size: 13px; font-family: 'Vazirmatn', sans-serif; font-weight: 600; cursor: pointer; }
+.opp-invest-btn:hover { background: #1D9E75; color: #fff; }
 
-  /* ADMIN */
-  .admin-header { padding: 24px 32px; background: #fff; border-bottom: 1px solid #e8e8e8; }
-  .admin-title { font-size: 20px; font-weight: 700; }
-  .admin-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 24px 32px; }
-  .admin-stat { background: #fff; border-radius: 10px; padding: 16px; border: 1px solid #e8e8e8; }
-  .admin-stat .lbl { font-size: 12px; color: #888; margin-bottom: 6px; }
-  .admin-stat .val { font-size: 22px; font-weight: 700; }
-  .table-section { padding: 0 32px 32px; }
-  .table-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
-  .table-head { display: grid; grid-template-columns: 2fr 1.2fr 1.2fr 1fr 1fr; padding: 12px 20px; background: #f9f9f7; font-size: 12px; color: #888; font-weight: 600; border-bottom: 1px solid #e8e8e8; }
-  .table-row { display: grid; grid-template-columns: 2fr 1.2fr 1.2fr 1fr 1fr; padding: 14px 20px; border-bottom: 1px solid #f0f0f0; font-size: 14px; align-items: center; }
-  .table-row:last-child { border-bottom: none; }
-  .table-row:hover { background: #fafafa; }
-  .action-btns { display: flex; gap: 6px; }
-  .action-btn { font-size: 11px; padding: 4px 10px; border-radius: 6px; border: none; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-weight: 500; }
-  .action-btn.approve { background: #E1F5EE; color: #0F6E56; }
-  .action-btn.reject { background: #FCEBEB; color: #A32D2D; }
+/* سرمایه من */
+.my-invest-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
+.my-invest-head { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; padding: 12px 20px; background: #f9f9f7; font-size: 12px; color: #888; font-weight: 600; border-bottom: 1px solid #e8e8e8; }
+.my-invest-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; padding: 14px 20px; border-bottom: 1px solid #f0f0f0; font-size: 13px; align-items: center; }
+.my-invest-row:last-child { border-bottom: none; }
+.badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+.badge.green { background: #E1F5EE; color: #0F6E56; }
+.badge.amber { background: #FAEEDA; color: #854F0B; }
+
+/* درخواست وام */
+.req-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 28px; max-width: 520px; }
+.req-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.req-sub { font-size: 13px; color: #888; margin-bottom: 24px; line-height: 1.7; }
+.currency-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.currency-tab { padding: 7px 18px; border-radius: 8px; font-size: 13px; border: 1px solid #ddd; background: transparent; cursor: pointer; font-family: 'Vazirmatn', sans-serif; color: #555; }
+.currency-tab.active { background: #1D9E75; color: #fff; border-color: #1D9E75; font-weight: 600; }
+
+/* شارژ / برداشت */
+.charge-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 28px; max-width: 520px; }
+.info-box { background: #FFF8E6; border: 1px solid #F5D78A; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7A5500; margin-top: 16px; line-height: 1.7; }
 </style>
 </head>
 <body>
 
-<nav>
+<!-- NAV صفحه اصلی -->
+<nav id="main-nav">
   <div class="logo"><div class="logo-dot"></div> RezTeam</div>
   <div class="nav-links">
     <a class="nav-link" onclick="showPage('home')">صفحه اصلی</a>
-    <a class="nav-link">فرصت‌ها</a>
-    <a class="nav-link">درباره ما</a>
-    <a class="nav-link">تماس</a>
+    <a class="nav-link" onclick="showPage('contact')">ارتباط با ما</a>
   </div>
   <div class="nav-btns">
-    <button class="btn" onclick="showPage('register')">ورود</button>
+    <button class="btn" onclick="showPage('login')">ورود</button>
     <button class="btn primary" onclick="showPage('register')">ثبت‌نام</button>
   </div>
 </nav>
 
-<div class="tab-bar">
-  <div class="tab active" onclick="switchTab(this,'home')">صفحه اصلی</div>
-  <div class="tab" onclick="switchTab(this,'register')">ثبت‌نام</div>
-  <div class="tab" onclick="switchTab(this,'dashboard')">داشبورد کاربر</div>
-  <div class="tab" onclick="switchTab(this,'admin')">پنل مدیریت</div>
-</div>
-
-<!-- HOME -->
+<!-- ===== صفحه اصلی ===== -->
 <div id="home" class="page active">
   <div class="hero">
     <h1>سرمایه‌گذاری هوشمند با RezTeam</h1>
     <p>با سرمایه‌گذاری در پروژه‌های ما، از سود ماهانه مطمئن بهره‌مند شوید. طلا، فروشگاه‌ها و فرصت‌های بیشتر.</p>
     <div class="hero-btns">
-      <button class="btn-green" onclick="switchTabByName('register')">همین الان شروع کنید</button>
-      <button class="btn-outline" onclick="switchTabByName('dashboard')">مشاهده فرصت‌ها</button>
+      <button class="btn-green" onclick="showPage('register')">همین الان شروع کنید</button>
+      <button class="btn-outline" onclick="showPage('contact')">ارتباط با ما</button>
     </div>
   </div>
-  <div class="stats">
+  <div class="home-stats">
     <div class="stat-card">
       <div class="stat-label">کل سرمایه‌گذاری</div>
       <div class="stat-val">۴۲ میلیارد</div>
@@ -164,139 +193,375 @@
       <div class="stat-sub">ماهانه</div>
     </div>
   </div>
-  <div class="section">
+  <div class="home-section">
     <div class="section-title">فرصت‌های سرمایه‌گذاری</div>
     <div class="invest-grid">
       <div class="invest-card">
         <div class="invest-icon" style="background:#E1F5EE;">🥇</div>
         <div class="invest-name">سرمایه‌گذاری طلا</div>
         <div class="invest-return">سود ماهانه: ۲.۵٪ تا ۴٪</div>
-        <div class="invest-min">حداقل سرمایه: ۵ میلیون تومان</div>
+        <div class="invest-min">حداقل: ۵ میلیون تومان</div>
       </div>
       <div class="invest-card">
         <div class="invest-icon" style="background:#E6F1FB;">🏪</div>
         <div class="invest-name">فروشگاه‌های زنجیره‌ای</div>
         <div class="invest-return">سود ماهانه: ۳٪ تا ۵٪</div>
-        <div class="invest-min">حداقل سرمایه: ۱۰ میلیون تومان</div>
+        <div class="invest-min">حداقل: ۱۰ میلیون تومان</div>
       </div>
       <div class="invest-card">
         <div class="invest-icon" style="background:#FAEEDA;">🏗️</div>
         <div class="invest-name">پروژه‌های ساختمانی</div>
         <div class="invest-return">سود ماهانه: ۴٪ تا ۶٪</div>
-        <div class="invest-min">حداقل سرمایه: ۵۰ میلیون تومان</div>
+        <div class="invest-min">حداقل: ۵۰ میلیون تومان</div>
       </div>
       <div class="invest-card">
         <div class="invest-icon" style="background:#EEEDFE;">💼</div>
         <div class="invest-name">صندوق مشترک</div>
         <div class="invest-return">سود ماهانه: ۲٪ تا ۳.۵٪</div>
-        <div class="invest-min">حداقل سرمایه: ۱ میلیون تومان</div>
+        <div class="invest-min">حداقل: ۱ میلیون تومان</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- REGISTER -->
+<!-- ===== ثبت‌نام ===== -->
 <div id="register" class="page">
   <div class="form-wrap">
     <div class="form-card">
       <div class="form-title">ثبت‌نام در RezTeam</div>
-      <div class="form-sub">حساب کاربری بسازید و سرمایه‌گذاری را شروع کنید</div>
+      <div class="form-sub">اطلاعات خود را وارد کنید</div>
       <div class="field"><label>نام و نام خانوادگی</label><input type="text" placeholder="رضا احمدی" /></div>
       <div class="field"><label>شماره موبایل</label><input type="text" placeholder="09123456789" /></div>
       <div class="field"><label>ایمیل</label><input type="email" placeholder="example@email.com" /></div>
       <div class="field"><label>کد ملی</label><input type="text" placeholder="0123456789" /></div>
-      <div class="field"><label>رمز عبور</label><input type="password" placeholder="حداقل ۸ کاراکتر" /></div>
-      <button class="full-btn">ثبت‌نام</button>
-      <div class="or-line">حساب دارید؟ <span onclick="showPage('dashboard')">وارد شوید</span></div>
-      <div class="notice">حساب شما پس از بررسی و تأیید توسط تیم ما فعال می‌شود.</div>
+      <button class="full-btn" onclick="showPage('register-done')">ثبت‌نام</button>
+      <div class="or-line">حساب دارید؟ <span onclick="showPage('login')">وارد شوید</span></div>
     </div>
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="page">
-  <div class="dash-header">
-    <div>
-      <div class="dash-title">خوش آمدید، رضا</div>
-      <div class="dash-sub">آخرین ورود: امروز، ۱۴:۳۲</div>
-    </div>
-    <span class="badge green">حساب تأیید شده</span>
-  </div>
-  <div class="dash-stats">
-    <div class="stat-card">
-      <div class="stat-label">کل سرمایه</div>
-      <div class="stat-val">۸۵ میلیون</div>
-      <div class="stat-sub">تومان</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">سود این ماه</div>
-      <div class="stat-val">۲.۸ میلیون</div>
-      <div class="stat-sub">+۳.۳٪</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">پرداخت بعدی</div>
-      <div class="stat-val">۱۲ روز</div>
-      <div class="stat-sub">دیگر</div>
-    </div>
-  </div>
-  <div class="portfolio-section">
-    <div class="section-title">پرتفوی من</div>
-    <div class="portfolio-card">
-      <div class="portfolio-row">
-        <div class="p-icon" style="background:#E1F5EE;">🥇</div>
-        <div class="p-info">
-          <div class="p-name">طلا</div>
-          <div class="p-detail">۳ ماه فعال · سود ماهانه ۳.۲٪</div>
-        </div>
-        <div class="p-val">
-          <div class="p-amount">۵۰ میلیون</div>
-          <div class="p-return">+۱.۶ میلیون سود</div>
-        </div>
+<!-- ===== صفحه بعد از ثبت‌نام ===== -->
+<div id="register-done" class="page">
+  <div class="form-wrap">
+    <div class="form-card" style="text-align:center;">
+      <div style="font-size:52px;margin-bottom:16px;">✅</div>
+      <div class="form-title">ثبت‌نام شما با موفقیت انجام شد</div>
+      <div style="font-size:14px;color:#888;margin-top:10px;line-height:1.8;">
+        برای فعال‌سازی حساب کاربری، لطفاً با پشتیبانی ما تماس بگیرید یا از طریق بخش ارتباط با ما اقدام کنید.
       </div>
-      <div class="portfolio-row">
-        <div class="p-icon" style="background:#E6F1FB;">🏪</div>
-        <div class="p-info">
-          <div class="p-name">فروشگاه زنجیره‌ای</div>
-          <div class="p-detail">۱ ماه فعال · سود ماهانه ۴٪</div>
-        </div>
-        <div class="p-val">
-          <div class="p-amount">۳۵ میلیون</div>
-          <div class="p-return">+۱.۴ میلیون سود</div>
-        </div>
+      <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px;">
+        <button class="full-btn" onclick="showPage('contact')">ارتباط با ما</button>
+        <button class="btn" style="width:100%;padding:12px;" onclick="showPage('home')">بازگشت به صفحه اصلی</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ADMIN -->
-<div id="admin" class="page">
-  <div class="admin-header">
-    <div class="admin-title">پنل مدیریت</div>
+<!-- ===== ورود ===== -->
+<div id="login" class="page">
+  <div class="form-wrap">
+    <div class="form-card">
+      <div class="form-title">ورود به حساب کاربری</div>
+      <div class="form-sub">با نام کاربری و رمز عبور وارد شوید</div>
+      <div class="field"><label>نام کاربری</label><input type="text" placeholder="نام کاربری" /></div>
+      <div class="field"><label>رمز عبور</label><input type="password" placeholder="رمز عبور" /></div>
+      <button class="full-btn" onclick="showPanel('dashboard-section')">ورود</button>
+      <div class="or-line">حساب ندارید؟ <span onclick="showPage('register')">ثبت‌نام کنید</span></div>
+    </div>
   </div>
-  <div class="admin-stats">
-    <div class="admin-stat"><div class="lbl">کاربران کل</div><div class="val">۱,۲۸۴</div></div>
-    <div class="admin-stat"><div class="lbl">در انتظار تأیید</div><div class="val" style="color:#854F0B;">۱۲</div></div>
-    <div class="admin-stat"><div class="lbl">سرمایه کل</div><div class="val">۴۲B</div></div>
-    <div class="admin-stat"><div class="lbl">سود پرداختی ماه</div><div class="val" style="color:#0F6E56;">۱.۳B</div></div>
+</div>
+
+<!-- ===== ارتباط با ما ===== -->
+<div id="contact" class="page">
+  <div class="contact-wrap">
+    <div class="contact-card">
+      <div class="contact-title">ارتباط با ما</div>
+      <div class="contact-sub">برای فعال‌سازی حساب، سوالات یا پشتیبانی از طریق راه‌های زیر با ما در تماس باشید.</div>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon" style="background:#E6F1FB;">✈️</div>
+          <div class="contact-item-info">
+            <div class="contact-item-label">تلگرام</div>
+            <div class="contact-item-val">@RezTeam_Support</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon" style="background:#E1F5EE;">💬</div>
+          <div class="contact-item-info">
+            <div class="contact-item-label">واتساپ</div>
+            <div class="contact-item-val">+98 912 000 0000</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="table-section">
-    <div class="section-title">کاربران در انتظار تأیید</div>
-    <div class="table-card">
-      <div class="table-head">
-        <span>نام</span><span>موبایل</span><span>کد ملی</span><span>تاریخ</span><span>عملیات</span>
+</div>
+
+<!-- ===== پنل کاربری ===== -->
+<div id="user-panel" class="page">
+  <div class="panel-layout">
+    <!-- منوی کناری -->
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="sidebar-name">رضا جلیلیان</div>
+        <span class="sidebar-badge">تأیید شده</span>
       </div>
-      <div class="table-row">
-        <span>علی محمدی</span><span>0912…</span><span>0043…</span><span>۱۴۰۴/۰۴/۰۱</span>
-        <div class="action-btns"><button class="action-btn approve">تأیید</button><button class="action-btn reject">رد</button></div>
+      <ul class="sidebar-menu">
+        <li class="sidebar-item active" onclick="showPanel('dashboard-section', this)">
+          <span class="s-icon">🏠</span> داشبورد
+        </li>
+        <li class="sidebar-item" onclick="showPanel('opportunities-section', this)">
+          <span class="s-icon">📈</span> فرصت‌های سرمایه‌گذاری
+        </li>
+        <li class="sidebar-item" onclick="showPanel('special-section', this)">
+          <span class="s-icon">⭐</span> پیشنهاد ویژه
+        </li>
+        <li class="sidebar-item" onclick="showPanel('my-invest-section', this)">
+          <span class="s-icon">💼</span> سرمایه من
+        </li>
+        <li class="sidebar-item" onclick="showPanel('loan-section', this)">
+          <span class="s-icon">🏦</span> دریافت سرمایه / وام
+        </li>
+        <li class="sidebar-item" onclick="showPanel('charge-section', this)">
+          <span class="s-icon">💳</span> شارژ حساب
+        </li>
+        <li class="sidebar-item" onclick="showPanel('withdraw-section', this)">
+          <span class="s-icon">💸</span> برداشت
+        </li>
+      </ul>
+    </div>
+
+    <!-- محتوا -->
+    <div class="panel-content">
+
+      <!-- داشبورد -->
+      <div id="dashboard-section" class="panel-section active">
+        <div class="dash-greeting">
+          <h2>خوش آمدید، رضا 👋</h2>
+          <p>آخرین ورود: امروز، ۱۴:۳۲</p>
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="lbl">موجودی ریال</div>
+            <div class="val">۸۵ میلیون</div>
+            <div class="sub">تومان</div>
+          </div>
+          <div class="dash-card">
+            <div class="lbl">موجودی دلار (USDT)</div>
+            <div class="val">۳۲۰</div>
+            <div class="sub">دلار</div>
+          </div>
+          <div class="dash-card">
+            <div class="lbl">موجودی طلا</div>
+            <div class="val">۴.۵</div>
+            <div class="sub">گرم</div>
+          </div>
+        </div>
+        <div class="section-title">سرمایه‌گذاری‌های فعال</div>
+        <div class="portfolio-card">
+          <div class="portfolio-row">
+            <div class="p-icon" style="background:#E1F5EE;">🥇</div>
+            <div class="p-info">
+              <div class="p-name">طلا</div>
+              <div class="p-detail">۳ ماه فعال · سود ماهانه ۳.۲٪</div>
+            </div>
+            <div class="p-val">
+              <div class="p-amount">۵۰ میلیون ت</div>
+              <div class="p-return">+۱.۶ میلیون سود</div>
+            </div>
+          </div>
+          <div class="portfolio-row">
+            <div class="p-icon" style="background:#E6F1FB;">🏪</div>
+            <div class="p-info">
+              <div class="p-name">فروشگاه زنجیره‌ای</div>
+              <div class="p-detail">۱ ماه فعال · سود ۳ ماهه ۴٪</div>
+            </div>
+            <div class="p-val">
+              <div class="p-amount">۳۵ میلیون ت</div>
+              <div class="p-return">در انتظار سود</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="table-row">
-        <span>سارا کریمی</span><span>0935…</span><span>0021…</span><span>۱۴۰۴/۰۴/۰۲</span>
-        <div class="action-btns"><button class="action-btn approve">تأیید</button><button class="action-btn reject">رد</button></div>
+
+      <!-- فرصت‌های سرمایه‌گذاری -->
+      <div id="opportunities-section" class="panel-section">
+        <div class="section-title" style="margin-bottom:20px;">فرصت‌های سرمایه‌گذاری</div>
+        <div class="opp-grid">
+          <div class="opp-card">
+            <div class="opp-header">
+              <div class="opp-icon" style="background:#E1F5EE;">🥇</div>
+              <div>
+                <div class="opp-name">سرمایه‌گذاری طلا</div>
+                <div class="opp-currency">ارز: ریال · طلا</div>
+              </div>
+            </div>
+            <div class="opp-details">
+              <div class="opp-detail-row"><span class="dk">سود ماهانه</span><span class="dv green">۳.۲٪</span></div>
+              <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۵ میلیون تومان</span></div>
+              <div class="opp-detail-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
+            </div>
+            <button class="opp-invest-btn">سرمایه‌گذاری کنید</button>
+          </div>
+          <div class="opp-card">
+            <div class="opp-header">
+              <div class="opp-icon" style="background:#E6F1FB;">🏪</div>
+              <div>
+                <div class="opp-name">فروشگاه زنجیره‌ای</div>
+                <div class="opp-currency">ارز: ریال</div>
+              </div>
+            </div>
+            <div class="opp-details">
+              <div class="opp-detail-row"><span class="dk">سود هر ۳ ماه</span><span class="dv green">۴٪</span></div>
+              <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۱۰ میلیون تومان</span></div>
+              <div class="opp-detail-row"><span class="dk">پرداخت سود</span><span class="dv">هر ۳ ماه</span></div>
+            </div>
+            <button class="opp-invest-btn">سرمایه‌گذاری کنید</button>
+          </div>
+          <div class="opp-card">
+            <div class="opp-header">
+              <div class="opp-icon" style="background:#FAEEDA;">💵</div>
+              <div>
+                <div class="opp-name">سرمایه‌گذاری دلاری</div>
+                <div class="opp-currency">ارز: USDT</div>
+              </div>
+            </div>
+            <div class="opp-details">
+              <div class="opp-detail-row"><span class="dk">سود ماهانه</span><span class="dv green">۲.۵٪</span></div>
+              <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۱۰۰ دلار</span></div>
+              <div class="opp-detail-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
+            </div>
+            <button class="opp-invest-btn">سرمایه‌گذاری کنید</button>
+          </div>
+          <div class="opp-card">
+            <div class="opp-header">
+              <div class="opp-icon" style="background:#EEEDFE;">🏗️</div>
+              <div>
+                <div class="opp-name">پروژه ساختمانی</div>
+                <div class="opp-currency">ارز: ریال</div>
+              </div>
+            </div>
+            <div class="opp-details">
+              <div class="opp-detail-row"><span class="dk">سود ماهانه</span><span class="dv green">۵٪</span></div>
+              <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۵۰ میلیون تومان</span></div>
+              <div class="opp-detail-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
+            </div>
+            <button class="opp-invest-btn">سرمایه‌گذاری کنید</button>
+          </div>
+        </div>
       </div>
-      <div class="table-row">
-        <span>مهدی رضایی</span><span>0901…</span><span>0087…</span><span>۱۴۰۴/۰۳/۲۸</span>
-        <div class="action-btns"><span class="badge green">تأیید شده</span></div>
+
+      <!-- پیشنهاد ویژه -->
+      <div id="special-section" class="panel-section">
+        <div class="section-title" style="margin-bottom:20px;">پیشنهاد ویژه</div>
+        <div class="opp-grid">
+          <div class="opp-card" style="border-color:#F5B800;border-width:2px;">
+            <div style="background:#FFF8E6;border-radius:8px;padding:6px 12px;font-size:12px;color:#7A5500;font-weight:600;display:inline-block;margin-bottom:14px;">⭐ پیشنهاد محدود</div>
+            <div class="opp-header">
+              <div class="opp-icon" style="background:#FFF8E6;">🏆</div>
+              <div>
+                <div class="opp-name">سرمایه‌گذاری ویژه VIP</div>
+                <div class="opp-currency">ارز: ریال · USDT</div>
+              </div>
+            </div>
+            <div class="opp-details">
+              <div class="opp-detail-row"><span class="dk">سود ماهانه</span><span class="dv green">۷٪</span></div>
+              <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۱۰۰ میلیون تومان</span></div>
+              <div class="opp-detail-row"><span class="dk">ظرفیت باقی‌مانده</span><span class="dv" style="color:#C0392B;">۳ نفر</span></div>
+            </div>
+            <button class="opp-invest-btn" style="background:#F5B800;color:#fff;">همین الان سرمایه‌گذاری کنید</button>
+          </div>
+        </div>
       </div>
+
+      <!-- سرمایه من -->
+      <div id="my-invest-section" class="panel-section">
+        <div class="section-title" style="margin-bottom:20px;">سرمایه من</div>
+        <div class="my-invest-card">
+          <div class="my-invest-head">
+            <span>نوع سرمایه‌گذاری</span>
+            <span>مبلغ</span>
+            <span>سود</span>
+            <span>پرداخت سود</span>
+            <span>وضعیت</span>
+          </div>
+          <div class="my-invest-row">
+            <span>🥇 طلا</span>
+            <span>۵۰ میلیون ت</span>
+            <span style="color:#0F6E56;">۳.۲٪ ماهانه</span>
+            <span>ماهانه</span>
+            <span><span class="badge green">فعال</span></span>
+          </div>
+          <div class="my-invest-row">
+            <span>🏪 فروشگاه</span>
+            <span>۳۵ میلیون ت</span>
+            <span style="color:#0F6E56;">۴٪ سه‌ماهه</span>
+            <span>هر ۳ ماه</span>
+            <span><span class="badge amber">در انتظار</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- درخواست وام -->
+      <div id="loan-section" class="panel-section">
+        <div class="req-card">
+          <div class="req-title">🏦 درخواست وام / سرمایه</div>
+          <div class="req-sub">مبلغ مورد نیاز و توضیحات را وارد کنید. تیم ما پس از بررسی با شما تماس می‌گیرد.</div>
+          <div style="margin-bottom:16px;">
+            <div style="font-size:13px;color:#555;font-weight:500;margin-bottom:8px;">ارز مورد نظر</div>
+            <div class="currency-tabs">
+              <button class="currency-tab active">ریال</button>
+              <button class="currency-tab">USDT</button>
+              <button class="currency-tab">طلا</button>
+            </div>
+          </div>
+          <div class="field"><label>مبلغ درخواستی</label><input type="text" placeholder="مثال: ۵۰ میلیون تومان" /></div>
+          <div class="field"><label>مبلغ اقساط ماهانه (تقریبی)</label><input type="text" placeholder="مثال: ۵ میلیون تومان" /></div>
+          <div class="field"><label>توضیحات</label><input type="text" placeholder="توضیح کوتاه درباره نیاز شما" /></div>
+          <button class="full-btn">ثبت درخواست</button>
+          <div class="info-box">⚠️ پس از ثبت درخواست، تیم ما ظرف ۲۴ تا ۴۸ ساعت با شما تماس خواهد گرفت.</div>
+        </div>
+      </div>
+
+      <!-- شارژ حساب -->
+      <div id="charge-section" class="panel-section">
+        <div class="charge-card">
+          <div class="req-title">💳 شارژ حساب</div>
+          <div class="req-sub">نوع ارز و مبلغ را انتخاب کنید. پس از ثبت درخواست، تیم ما با شما تماس می‌گیرد.</div>
+          <div style="margin-bottom:16px;">
+            <div style="font-size:13px;color:#555;font-weight:500;margin-bottom:8px;">نوع ارز</div>
+            <div class="currency-tabs">
+              <button class="currency-tab active">ریال</button>
+              <button class="currency-tab">USDT</button>
+              <button class="currency-tab">طلا</button>
+            </div>
+          </div>
+          <div class="field"><label>مبلغ شارژ</label><input type="text" placeholder="مثال: ۱۰۰ میلیون تومان" /></div>
+          <button class="full-btn">ثبت درخواست شارژ</button>
+          <div class="info-box">⚠️ پس از ثبت درخواست، کارشناس ما با شما تماس گرفته و مراحل واریز را راهنمایی می‌کند.</div>
+        </div>
+      </div>
+
+      <!-- برداشت -->
+      <div id="withdraw-section" class="panel-section">
+        <div class="charge-card">
+          <div class="req-title">💸 برداشت</div>
+          <div class="req-sub">نوع ارز و مقدار برداشت را مشخص کنید. پس از تأیید توسط ادمین به حساب شما واریز می‌شود.</div>
+          <div style="margin-bottom:16px;">
+            <div style="font-size:13px;color:#555;font-weight:500;margin-bottom:8px;">نوع ارز</div>
+            <div class="currency-tabs">
+              <button class="currency-tab active">ریال</button>
+              <button class="currency-tab">USDT</button>
+              <button class="currency-tab">طلا</button>
+            </div>
+          </div>
+          <div class="field"><label>مقدار برداشت</label><input type="text" placeholder="مثال: ۱۰ گرم طلا / ۵۰ میلیون تومان" /></div>
+          <div class="field"><label>شماره حساب / کیف پول</label><input type="text" placeholder="شماره حساب یا آدرس کیف پول" /></div>
+          <button class="full-btn">ثبت درخواست برداشت</button>
+          <div class="info-box">⚠️ درخواست برداشت پس از تأیید ادمین ظرف ۱ تا ۳ روز کاری انجام می‌شود.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -304,24 +569,32 @@
 <script>
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  const map = {home:0,register:1,dashboard:2,admin:3};
-  if(map[id] !== undefined) document.querySelectorAll('.tab')[map[id]].classList.add('active');
+  if (id === 'dashboard-section') {
+    document.getElementById('user-panel').classList.add('active');
+    showPanel('dashboard-section');
+  } else {
+    document.getElementById(id).classList.add('active');
+  }
 }
-function switchTab(el, id) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
+
+function showPanel(id, el) {
+  document.getElementById('user-panel').classList.add('active');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('user-panel').classList.add('active');
+  document.querySelectorAll('.panel-section').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  if (el) {
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
 }
-function switchTabByName(id) {
-  const map = {home:0,register:1,dashboard:2,admin:3};
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  if(map[id] !== undefined) document.querySelectorAll('.tab')[map[id]].classList.add('active');
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+
+document.querySelectorAll('.currency-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    this.closest('.currency-tabs').querySelectorAll('.currency-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
 </script>
 </body>
 </html>
