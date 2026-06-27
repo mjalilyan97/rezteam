@@ -149,6 +149,38 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 /* شارژ / برداشت */
 .charge-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 28px; max-width: 520px; }
 .info-box { background: #FFF8E6; border: 1px solid #F5D78A; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7A5500; margin-top: 16px; line-height: 1.7; }
+
+/* ===== صفحه جزئیات سرمایه‌گذاری ===== */
+.detail-header { display: flex; align-items: center; gap: 14px; padding: 24px 28px; background: #fff; border-bottom: 1px solid #e8e8e8; }
+.detail-back { width: 36px; height: 36px; border-radius: 8px; border: 1px solid #ddd; background: transparent; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.detail-back:hover { background: #f5f5f3; }
+.detail-header-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.detail-header-info h2 { font-size: 20px; font-weight: 700; }
+.detail-header-info p { font-size: 13px; color: #888; margin-top: 3px; }
+.detail-body { padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.detail-info-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+.detail-info-title { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+.detail-info-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+.detail-info-row:last-child { border-bottom: none; }
+.detail-info-row .dk { color: #888; }
+.detail-info-row .dv { font-weight: 600; }
+.detail-info-row .dv.green { color: #0F6E56; }
+.detail-desc { font-size: 14px; color: #555; line-height: 1.9; }
+.detail-form-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 22px; }
+.detail-form-title { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+.amount-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+.amount-opt { padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: Vazirmatn,sans-serif; background: transparent; cursor: pointer; text-align: center; color: #1a1a1a; transition: all 0.15s; }
+.amount-opt:hover { border-color: #1D9E75; color: #0F6E56; }
+.amount-opt.selected { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; font-weight: 700; }
+.month-options { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.month-opt { padding: 8px 16px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; font-family: Vazirmatn,sans-serif; background: transparent; cursor: pointer; color: #555; transition: all 0.15s; }
+.month-opt:hover { border-color: #1D9E75; color: #0F6E56; }
+.month-opt.selected { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; font-weight: 700; }
+.calc-box { background: #f9f9f7; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+.calc-row { display: flex; justify-content: space-between; padding: 4px 0; }
+.calc-row .ck { color: #888; }
+.calc-row .cv { font-weight: 600; }
+.calc-row .cv.green { color: #0F6E56; }
 </style>
 </head>
 <body>
@@ -305,22 +337,22 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
       <div id="dashboard-section" class="panel-section active">
         <div class="dash-greeting">
           <h2>خوش آمدید، رضا 👋</h2>
-          <p>آخرین ورود: امروز، ۱۴:۳۲</p>
+          <p id="shamsi-datetime" style="font-size:14px;color:#888;margin-top:4px;"></p>
         </div>
         <div class="dash-cards">
           <div class="dash-card">
-            <div class="lbl">موجودی ریال</div>
-            <div class="val">۸۵ میلیون</div>
+            <div class="lbl">موجودی تومانی</div>
+            <div class="val">85,000,000</div>
             <div class="sub">تومان</div>
           </div>
           <div class="dash-card">
             <div class="lbl">موجودی دلار (USDT)</div>
-            <div class="val">۳۲۰</div>
+            <div class="val">320</div>
             <div class="sub">دلار</div>
           </div>
           <div class="dash-card">
             <div class="lbl">موجودی طلا</div>
-            <div class="val">۴.۵</div>
+            <div class="val">4.5</div>
             <div class="sub">گرم</div>
           </div>
         </div>
@@ -330,22 +362,44 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
             <div class="p-icon" style="background:#E1F5EE;">🥇</div>
             <div class="p-info">
               <div class="p-name">طلا</div>
-              <div class="p-detail">۳ ماه فعال · سود ماهانه ۳.۲٪</div>
+              <div class="p-detail">50,000,000 تومان · سود ماهانه ۳.۲٪</div>
             </div>
-            <div class="p-val">
-              <div class="p-amount">۵۰ میلیون ت</div>
-              <div class="p-return">+۱.۶ میلیون سود</div>
+            <div class="p-val" style="display:flex;align-items:center;gap:14px;">
+              <div>
+                <div class="p-amount">+1,600,000 تومان سود</div>
+              </div>
+              <div class="circle-wrap" title="۸ روز مانده تا واریز سود">
+                <svg width="56" height="56" viewBox="0 0 56 56">
+                  <circle cx="28" cy="28" r="24" fill="none" stroke="#e8e8e8" stroke-width="5"/>
+                  <circle cx="28" cy="28" r="24" fill="none" stroke="#1D9E75" stroke-width="5"
+                    stroke-dasharray="150.8" stroke-dashoffset="40"
+                    stroke-linecap="round" transform="rotate(-90 28 28)"/>
+                  <text x="28" y="24" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="Vazirmatn,sans-serif" font-weight="600">۸ روز</text>
+                  <text x="28" y="35" text-anchor="middle" font-size="7" fill="#888" font-family="Vazirmatn,sans-serif">مانده</text>
+                </svg>
+              </div>
             </div>
           </div>
           <div class="portfolio-row">
             <div class="p-icon" style="background:#E6F1FB;">🏪</div>
             <div class="p-info">
               <div class="p-name">فروشگاه زنجیره‌ای</div>
-              <div class="p-detail">۱ ماه فعال · سود ۳ ماهه ۴٪</div>
+              <div class="p-detail">35,000,000 تومان · سود هر ۳ ماه ۴٪</div>
             </div>
-            <div class="p-val">
-              <div class="p-amount">۳۵ میلیون ت</div>
-              <div class="p-return">در انتظار سود</div>
+            <div class="p-val" style="display:flex;align-items:center;gap:14px;">
+              <div>
+                <div class="p-amount">+1,400,000 تومان سود</div>
+              </div>
+              <div class="circle-wrap" title="۴۵ روز مانده تا واریز سود">
+                <svg width="56" height="56" viewBox="0 0 56 56">
+                  <circle cx="28" cy="28" r="24" fill="none" stroke="#e8e8e8" stroke-width="5"/>
+                  <circle cx="28" cy="28" r="24" fill="none" stroke="#1D9E75" stroke-width="5"
+                    stroke-dasharray="150.8" stroke-dashoffset="113"
+                    stroke-linecap="round" transform="rotate(-90 28 28)"/>
+                  <text x="28" y="24" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="Vazirmatn,sans-serif" font-weight="600">۴۵ روز</text>
+                  <text x="28" y="35" text-anchor="middle" font-size="7" fill="#888" font-family="Vazirmatn,sans-serif">مانده</text>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -368,7 +422,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
               <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۵ میلیون تومان</span></div>
               <div class="opp-detail-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
             </div>
-            <button class="opp-invest-btn">سرمایه‌گذاری کنید</button>
+            <button class="opp-invest-btn" onclick="openDetail('invest-gold')">سرمایه‌گذاری کنید</button>
           </div>
           <div class="opp-card">
             <div class="opp-header">
@@ -383,7 +437,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
               <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۱۰ میلیون تومان</span></div>
               <div class="opp-detail-row"><span class="dk">پرداخت سود</span><span class="dv">هر ۳ ماه</span></div>
             </div>
-            <button class="opp-invest-btn">سرمایه‌گذاری کنید</button>
+            <button class="opp-invest-btn" onclick="openDetail('invest-shop')">سرمایه‌گذاری کنید</button>
           </div>
           <div class="opp-card">
             <div class="opp-header">
@@ -398,7 +452,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
               <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۱۰۰ دلار</span></div>
               <div class="opp-detail-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
             </div>
-            <button class="opp-invest-btn">سرمایه‌گذاری کنید</button>
+            <button class="opp-invest-btn" onclick="openDetail('invest-dollar')">سرمایه‌گذاری کنید</button>
           </div>
           <div class="opp-card">
             <div class="opp-header">
@@ -413,7 +467,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
               <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۵۰ میلیون تومان</span></div>
               <div class="opp-detail-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
             </div>
-            <button class="opp-invest-btn">سرمایه‌گذاری کنید</button>
+            <button class="opp-invest-btn" onclick="openDetail(\'invest-building\')">سرمایه‌گذاری کنید</button>
           </div>
         </div>
       </div>
@@ -436,7 +490,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
               <div class="opp-detail-row"><span class="dk">حداقل سرمایه</span><span class="dv">۱۰۰ میلیون تومان</span></div>
               <div class="opp-detail-row"><span class="dk">ظرفیت باقی‌مانده</span><span class="dv" style="color:#C0392B;">۳ نفر</span></div>
             </div>
-            <button class="opp-invest-btn" style="background:#F5B800;color:#fff;">همین الان سرمایه‌گذاری کنید</button>
+            <button class="opp-invest-btn" style="background:#F5B800;color:#fff;" onclick="openDetail('invest-vip')">همین الان سرمایه‌گذاری کنید</button>
           </div>
         </div>
       </div>
@@ -535,11 +589,13 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 
 <script>
 function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); p.style.display='none'; });
   if (id === 'dashboard-section') {
+    document.getElementById('user-panel').style.display='block';
     document.getElementById('user-panel').classList.add('active');
     showPanel('dashboard-section');
   } else {
+    document.getElementById(id).style.display='block';
     document.getElementById(id).classList.add('active');
   }
 }
@@ -556,6 +612,92 @@ function showPanel(id, el) {
   }
 }
 
+function openDetail(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.style.display='none'; p.classList.remove('active'); });
+  var el = document.getElementById(id);
+  el.style.display = 'block';
+}
+function goBackToSpecial() {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); p.style.display='none'; });
+  document.getElementById('user-panel').style.display='block';
+  document.getElementById('user-panel').classList.add('active');
+  document.querySelectorAll('.panel-section').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('special-section').classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(function(i){ i.classList.remove('active'); });
+  document.querySelectorAll('.sidebar-item')[2].classList.add('active');
+}
+function goBackToOpportunities() {
+  document.querySelectorAll('.page').forEach(function(p){ p.style.display='none'; p.classList.remove('active'); });
+  document.getElementById('user-panel').style.display = 'block';
+  document.getElementById('user-panel').classList.add('active');
+  document.querySelectorAll('.panel-section').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('opportunities-section').classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(function(i){ i.classList.remove('active'); });
+  document.querySelectorAll('.sidebar-item')[1].classList.add('active');
+}
+var invState = {};
+function selectAmt(el, type, val) {
+  el.closest('.amount-options').querySelectorAll('.amount-opt').forEach(function(b){ b.classList.remove('selected'); });
+  el.classList.add('selected');
+  invState[type+'_a'] = val;
+  updateCalc(type);
+}
+function selectMon(el, type, val) {
+  el.closest('.month-options').querySelectorAll('.month-opt').forEach(function(b){ b.classList.remove('selected'); });
+  el.classList.add('selected');
+  invState[type+'_m'] = val;
+  updateCalc(type);
+}
+var rates = {gold:3.2, shop:4, dollar:2.5, building:5, vip:7};
+var units = {gold:'گرم', shop:'تومان', dollar:'USDT', building:'تومان', vip:'تومان'};
+function updateCalc(type) {
+  var a = invState[type+'_a'], m = invState[type+'_m'];
+  var box = document.getElementById(type+'-calc');
+  if (a && m && box) {
+    box.style.display = 'block';
+    document.getElementById(type+'-a').textContent = a + ' ' + units[type];
+    document.getElementById(type+'-m').textContent = m + (type==='shop' ? ' دوره' : ' ماه');
+    var num = parseFloat(a.replace(/,/g,''));
+    var profit = (num * rates[type] / 100).toLocaleString('en');
+    document.getElementById(type+'-p').textContent = profit + ' ' + units[type];
+  }
+}
+function submitInv() {
+  alert('درخواست شما با موفقیت ثبت شد. پس از تأیید ادمین اطلاع‌رسانی می‌شود.');
+}
+
+// ساعت و تاریخ شمسی
+function updateShamsiTime() {
+  const el = document.getElementById('shamsi-datetime');
+  if (!el) return;
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  try {
+    const dateStr = now.toLocaleDateString('fa-IR', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
+    el.textContent = dateStr + ' · ' + timeStr;
+  } catch(e) {
+    el.textContent = timeStr;
+  }
+}
+updateShamsiTime();
+setInterval(updateShamsiTime, 1000);
+
+// ساعت و تاریخ شمسی
+function updateShamsiTime() {
+  const el = document.getElementById('shamsi-datetime');
+  if (!el) return;
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  try {
+    const dateStr = now.toLocaleDateString('fa-IR', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
+    el.textContent = dateStr + ' · ' + timeStr;
+  } catch(e) {
+    el.textContent = timeStr;
+  }
+}
+updateShamsiTime();
+setInterval(updateShamsiTime, 1000);
+
 document.querySelectorAll('.currency-tab').forEach(tab => {
   tab.addEventListener('click', function() {
     this.closest('.currency-tabs').querySelectorAll('.currency-tab').forEach(t => t.classList.remove('active'));
@@ -563,5 +705,254 @@ document.querySelectorAll('.currency-tab').forEach(tab => {
   });
 });
 </script>
+
+<!-- جزئیات طلا -->
+<div id="invest-gold" class="page" style="display:none;">
+  <div class="detail-header">
+    <button class="detail-back" onclick="goBackToOpportunities()">&#8592;</button>
+    <div class="detail-header-icon" style="background:#E1F5EE;">&#127950;</div>
+    <div class="detail-header-info"><h2>سرمایه‌گذاری طلا</h2><p>واحد: گرم · سود ماهانه</p></div>
+  </div>
+  <div class="detail-body">
+    <div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">اطلاعات سرمایه‌گذاری</div>
+        <div class="detail-info-row"><span class="dk">واحد</span><span class="dv">گرم طلا</span></div>
+        <div class="detail-info-row"><span class="dk">حداقل</span><span class="dv">5 گرم</span></div>
+        <div class="detail-info-row"><span class="dk">حداکثر</span><span class="dv">50 گرم</span></div>
+        <div class="detail-info-row"><span class="dk">سود ماهانه</span><span class="dv green">3.2%</span></div>
+        <div class="detail-info-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
+      </div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">توضیحات</div>
+        <div class="detail-desc">در این طرح شما طلا را به صورت امانت نزد RezTeam نگهداری می‌کنید و ما ماهانه سود آن را به حساب شما واریز می‌کنیم. اصل طلا هر زمان که بخواهید قابل برداشت است.</div>
+      </div>
+    </div>
+    <div class="detail-form-card">
+      <div class="detail-form-title">ثبت درخواست</div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">مقدار طلا (گرم)</div>
+      <div class="amount-options">
+        <button class="amount-opt" onclick="selectAmt(this,'gold','5 گرم')">5 گرم</button>
+        <button class="amount-opt" onclick="selectAmt(this,'gold','10 گرم')">10 گرم</button>
+        <button class="amount-opt" onclick="selectAmt(this,'gold','25 گرم')">25 گرم</button>
+        <button class="amount-opt" onclick="selectAmt(this,'gold','50 گرم')">50 گرم</button>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">تعداد ماه</div>
+      <div class="month-options">
+        <button class="month-opt" onclick="selectMon(this,'gold',1)">1 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'gold',3)">3 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'gold',6)">6 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'gold',12)">12 ماه</button>
+      </div>
+      <div class="calc-box" id="gold-calc" style="display:none;">
+        <div class="calc-row"><span class="ck">مقدار</span><span class="cv" id="gold-a">-</span></div>
+        <div class="calc-row"><span class="ck">مدت</span><span class="cv" id="gold-m">-</span></div>
+        <div class="calc-row"><span class="ck">سود ماهانه (3.2%)</span><span class="cv green" id="gold-p">-</span></div>
+      </div>
+      <button class="full-btn" onclick="submitInv()">ثبت درخواست</button>
+      <div class="info-box" style="margin-top:14px;">پس از ثبت، ادمین تأیید می‌کند.</div>
+    </div>
+  </div>
+</div>
+
+<!-- جزئیات فروشگاه -->
+<div id="invest-shop" class="page" style="display:none;">
+  <div class="detail-header">
+    <button class="detail-back" onclick="goBackToOpportunities()">&#8592;</button>
+    <div class="detail-header-icon" style="background:#E6F1FB;">&#127978;</div>
+    <div class="detail-header-info"><h2>فروشگاه زنجیره‌ای</h2><p>واحد: تومان · سود هر ۳ ماه</p></div>
+  </div>
+  <div class="detail-body">
+    <div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">اطلاعات سرمایه‌گذاری</div>
+        <div class="detail-info-row"><span class="dk">واحد</span><span class="dv">تومان</span></div>
+        <div class="detail-info-row"><span class="dk">حداقل</span><span class="dv">10,000,000 تومان</span></div>
+        <div class="detail-info-row"><span class="dk">حداکثر</span><span class="dv">500,000,000 تومان</span></div>
+        <div class="detail-info-row"><span class="dk">سود هر ۳ ماه</span><span class="dv green">4%</span></div>
+        <div class="detail-info-row"><span class="dk">پرداخت سود</span><span class="dv">هر ۳ ماه</span></div>
+      </div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">توضیحات</div>
+        <div class="detail-desc">با سرمایه‌گذاری در فروشگاه‌های زنجیره‌ای RezTeam، شما سهامدار بخشی از درآمد فروشگاه می‌شوید. سود هر ۳ ماه یک‌بار به حساب شما واریز می‌گردد.</div>
+      </div>
+    </div>
+    <div class="detail-form-card">
+      <div class="detail-form-title">ثبت درخواست</div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">مبلغ سرمایه‌گذاری (تومان)</div>
+      <div class="amount-options">
+        <button class="amount-opt" onclick="selectAmt(this,'shop','10,000,000')">10,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'shop','50,000,000')">50,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'shop','100,000,000')">100,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'shop','500,000,000')">500,000,000</button>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">تعداد دوره (هر دوره ۳ ماه)</div>
+      <div class="month-options">
+        <button class="month-opt" onclick="selectMon(this,'shop',1)">1 دوره</button>
+        <button class="month-opt" onclick="selectMon(this,'shop',2)">2 دوره</button>
+        <button class="month-opt" onclick="selectMon(this,'shop',4)">4 دوره</button>
+      </div>
+      <div class="calc-box" id="shop-calc" style="display:none;">
+        <div class="calc-row"><span class="ck">مبلغ</span><span class="cv" id="shop-a">-</span></div>
+        <div class="calc-row"><span class="ck">تعداد دوره</span><span class="cv" id="shop-m">-</span></div>
+        <div class="calc-row"><span class="ck">سود هر دوره (4%)</span><span class="cv green" id="shop-p">-</span></div>
+      </div>
+      <button class="full-btn" onclick="submitInv()">ثبت درخواست</button>
+      <div class="info-box" style="margin-top:14px;">پس از ثبت، ادمین تأیید می‌کند.</div>
+    </div>
+  </div>
+</div>
+
+<!-- جزئیات دلار -->
+<div id="invest-dollar" class="page" style="display:none;">
+  <div class="detail-header">
+    <button class="detail-back" onclick="goBackToOpportunities()">&#8592;</button>
+    <div class="detail-header-icon" style="background:#FAEEDA;">&#128181;</div>
+    <div class="detail-header-info"><h2>سرمایه‌گذاری دلاری</h2><p>واحد: USDT · سود ماهانه</p></div>
+  </div>
+  <div class="detail-body">
+    <div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">اطلاعات سرمایه‌گذاری</div>
+        <div class="detail-info-row"><span class="dk">واحد</span><span class="dv">USDT</span></div>
+        <div class="detail-info-row"><span class="dk">حداقل</span><span class="dv">100 دلار</span></div>
+        <div class="detail-info-row"><span class="dk">حداکثر</span><span class="dv">10,000 دلار</span></div>
+        <div class="detail-info-row"><span class="dk">سود ماهانه</span><span class="dv green">2.5%</span></div>
+        <div class="detail-info-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
+      </div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">توضیحات</div>
+        <div class="detail-desc">سرمایه‌گذاری دلاری با USDT انجام می‌شود و سود ماهانه نیز به همان ارز واریز می‌گردد. مناسب افرادی که می‌خواهند دارایی دلاری خود را حفظ کرده و سود ثابت دریافت کنند.</div>
+      </div>
+    </div>
+    <div class="detail-form-card">
+      <div class="detail-form-title">ثبت درخواست</div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">مبلغ سرمایه‌گذاری (USDT)</div>
+      <div class="amount-options">
+        <button class="amount-opt" onclick="selectAmt(this,'dollar','100')">100</button>
+        <button class="amount-opt" onclick="selectAmt(this,'dollar','500')">500</button>
+        <button class="amount-opt" onclick="selectAmt(this,'dollar','1,000')">1,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'dollar','10,000')">10,000</button>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">تعداد ماه</div>
+      <div class="month-options">
+        <button class="month-opt" onclick="selectMon(this,'dollar',1)">1 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'dollar',3)">3 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'dollar',6)">6 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'dollar',12)">12 ماه</button>
+      </div>
+      <div class="calc-box" id="dollar-calc" style="display:none;">
+        <div class="calc-row"><span class="ck">مبلغ</span><span class="cv" id="dollar-a">-</span></div>
+        <div class="calc-row"><span class="ck">مدت</span><span class="cv" id="dollar-m">-</span></div>
+        <div class="calc-row"><span class="ck">سود ماهانه (2.5%)</span><span class="cv green" id="dollar-p">-</span></div>
+      </div>
+      <button class="full-btn" onclick="submitInv()">ثبت درخواست</button>
+      <div class="info-box" style="margin-top:14px;">پس از ثبت، ادمین تأیید می‌کند.</div>
+    </div>
+  </div>
+</div>
+
+<!-- جزئیات ساختمانی -->
+<div id="invest-building" class="page" style="display:none;">
+  <div class="detail-header">
+    <button class="detail-back" onclick="goBackToOpportunities()">&#8592;</button>
+    <div class="detail-header-icon" style="background:#EEEDFE;">&#127959;</div>
+    <div class="detail-header-info"><h2>پروژه ساختمانی</h2><p>واحد: تومان · سود ماهانه</p></div>
+  </div>
+  <div class="detail-body">
+    <div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">اطلاعات سرمایه‌گذاری</div>
+        <div class="detail-info-row"><span class="dk">واحد</span><span class="dv">تومان</span></div>
+        <div class="detail-info-row"><span class="dk">حداقل</span><span class="dv">50,000,000 تومان</span></div>
+        <div class="detail-info-row"><span class="dk">حداکثر</span><span class="dv">1,000,000,000 تومان</span></div>
+        <div class="detail-info-row"><span class="dk">سود ماهانه</span><span class="dv green">5%</span></div>
+        <div class="detail-info-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
+      </div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">توضیحات</div>
+        <div class="detail-desc">با سرمایه‌گذاری در پروژه‌های ساختمانی RezTeam، شما در سود حاصل از ساخت‌وساز شریک می‌شوید. سود ماهانه به حساب شما واریز می‌گردد. مناسب سرمایه‌گذاران بلندمدت.</div>
+      </div>
+    </div>
+    <div class="detail-form-card">
+      <div class="detail-form-title">ثبت درخواست</div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">مبلغ سرمایه‌گذاری (تومان)</div>
+      <div class="amount-options">
+        <button class="amount-opt" onclick="selectAmt(this,'building','50,000,000')">50,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'building','100,000,000')">100,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'building','500,000,000')">500,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'building','1,000,000,000')">1,000,000,000</button>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">تعداد ماه</div>
+      <div class="month-options">
+        <button class="month-opt" onclick="selectMon(this,'building',3)">3 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'building',6)">6 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'building',12)">12 ماه</button>
+      </div>
+      <div class="calc-box" id="building-calc" style="display:none;">
+        <div class="calc-row"><span class="ck">مبلغ</span><span class="cv" id="building-a">-</span></div>
+        <div class="calc-row"><span class="ck">مدت</span><span class="cv" id="building-m">-</span></div>
+        <div class="calc-row"><span class="ck">سود ماهانه (5%)</span><span class="cv green" id="building-p">-</span></div>
+      </div>
+      <button class="full-btn" onclick="submitInv()">ثبت درخواست</button>
+      <div class="info-box" style="margin-top:14px;">پس از ثبت، ادمین تأیید می‌کند.</div>
+    </div>
+  </div>
+</div>
+
+<!-- جزئیات پیشنهاد ویژه VIP -->
+<div id="invest-vip" class="page" style="display:none;">
+  <div class="detail-header">
+    <button class="detail-back" onclick="goBackToSpecial()">&#8592;</button>
+    <div class="detail-header-icon" style="background:#FFF8E6;">&#127942;</div>
+    <div class="detail-header-info"><h2>سرمایه‌گذاری ویژه VIP</h2><p>واحد: تومان · USDT · سود ماهانه</p></div>
+  </div>
+  <div class="detail-body">
+    <div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">اطلاعات سرمایه‌گذاری</div>
+        <div class="detail-info-row"><span class="dk">واحد</span><span class="dv">تومان یا USDT</span></div>
+        <div class="detail-info-row"><span class="dk">حداقل</span><span class="dv">100,000,000 تومان</span></div>
+        <div class="detail-info-row"><span class="dk">حداکثر</span><span class="dv">نامحدود</span></div>
+        <div class="detail-info-row"><span class="dk">سود ماهانه</span><span class="dv green">7%</span></div>
+        <div class="detail-info-row"><span class="dk">پرداخت سود</span><span class="dv">ماهانه</span></div>
+        <div class="detail-info-row"><span class="dk">ظرفیت باقی‌مانده</span><span class="dv" style="color:#C0392B;">3 نفر</span></div>
+      </div>
+      <div class="detail-info-card">
+        <div class="detail-info-title">توضیحات</div>
+        <div class="detail-desc">این طرح ویژه با سود ماهانه ۷٪ فقط برای تعداد محدودی از سرمایه‌گذاران در نظر گرفته شده است. با توجه به ظرفیت بسیار محدود، پس از تکمیل ظرفیت این پیشنهاد بسته خواهد شد. شرایط خاص و اختصاصی برای هر سرمایه‌گذار در نظر گرفته می‌شود.</div>
+      </div>
+    </div>
+    <div class="detail-form-card">
+      <div class="detail-form-title">ثبت درخواست</div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">نوع ارز</div>
+      <div class="currency-tabs" style="margin-bottom:16px;">
+        <button class="currency-tab active">تومان</button>
+        <button class="currency-tab">USDT</button>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">مبلغ سرمایه‌گذاری</div>
+      <div class="amount-options">
+        <button class="amount-opt" onclick="selectAmt(this,'vip','100,000,000')">100,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'vip','500,000,000')">500,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'vip','1,000,000,000')">1,000,000,000</button>
+        <button class="amount-opt" onclick="selectAmt(this,'vip','2,000,000,000')">2,000,000,000</button>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">تعداد ماه</div>
+      <div class="month-options">
+        <button class="month-opt" onclick="selectMon(this,'vip',1)">1 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'vip',3)">3 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'vip',6)">6 ماه</button>
+        <button class="month-opt" onclick="selectMon(this,'vip',12)">12 ماه</button>
+      </div>
+      <div class="calc-box" id="vip-calc" style="display:none;">
+        <div class="calc-row"><span class="ck">مبلغ</span><span class="cv" id="vip-a">-</span></div>
+        <div class="calc-row"><span class="ck">مدت</span><span class="cv" id="vip-m">-</span></div>
+        <div class="calc-row"><span class="ck">سود ماهانه (7%)</span><span class="cv green" id="vip-p">-</span></div>
+      </div>
+      <button class="full-btn" style="background:#F5B800;" onclick="submitInv()">ثبت درخواست ویژه</button>
+      <div class="info-box" style="margin-top:14px;">⭐ این پیشنهاد محدود است. پس از ثبت، ادمین در اسرع وقت با شما تماس می‌گیرد.</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
