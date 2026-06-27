@@ -161,8 +161,8 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
     <a class="nav-link" onclick="showPage('contact')">ارتباط با ما</a>
   </div>
   <div class="nav-btns">
-    <button class="btn" onclick="showPage('login')">ورود</button>
-    <button class="btn primary" onclick="showPage('register')">ثبت‌نام</button>
+    
+    <button class="btn" onclick="showPage('login')">ورود</button><button class="btn primary" onclick="showPage('contact')">عضویت</button>
   </div>
 </nav>
 
@@ -172,7 +172,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
     <h1>سرمایه‌گذاری هوشمند با RezTeam</h1>
     <p>با سرمایه‌گذاری در پروژه‌های ما، از سود ماهانه مطمئن بهره‌مند شوید. طلا، فروشگاه‌ها و فرصت‌های بیشتر.</p>
     <div class="hero-btns">
-      <button class="btn-green" onclick="showPage('register')">همین الان شروع کنید</button>
+      <button class="btn-green" onclick="showPage('contact')">همین الان عضو شوید</button>
       <button class="btn-outline" onclick="showPage('contact')">ارتباط با ما</button>
     </div>
   </div>
@@ -224,39 +224,6 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
   </div>
 </div>
 
-<!-- ===== ثبت‌نام ===== -->
-<div id="register" class="page">
-  <div class="form-wrap">
-    <div class="form-card">
-      <div class="form-title">ثبت‌نام در RezTeam</div>
-      <div class="form-sub">اطلاعات خود را وارد کنید</div>
-      <div class="field"><label>نام و نام خانوادگی</label><input type="text" placeholder="رضا احمدی" /></div>
-      <div class="field"><label>شماره موبایل</label><input type="text" placeholder="09123456789" /></div>
-      <div class="field"><label>ایمیل</label><input type="email" placeholder="example@email.com" /></div>
-      <div class="field"><label>کد ملی</label><input type="text" placeholder="0123456789" /></div>
-      <button class="full-btn" onclick="showPage('register-done')">ثبت‌نام</button>
-      <div class="or-line">حساب دارید؟ <span onclick="showPage('login')">وارد شوید</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== صفحه بعد از ثبت‌نام ===== -->
-<div id="register-done" class="page">
-  <div class="form-wrap">
-    <div class="form-card" style="text-align:center;">
-      <div style="font-size:52px;margin-bottom:16px;">✅</div>
-      <div class="form-title">ثبت‌نام شما با موفقیت انجام شد</div>
-      <div style="font-size:14px;color:#888;margin-top:10px;line-height:1.8;">
-        برای فعال‌سازی حساب کاربری، لطفاً با پشتیبانی ما تماس بگیرید یا از طریق بخش ارتباط با ما اقدام کنید.
-      </div>
-      <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px;">
-        <button class="full-btn" onclick="showPage('contact')">ارتباط با ما</button>
-        <button class="btn" style="width:100%;padding:12px;" onclick="showPage('home')">بازگشت به صفحه اصلی</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ===== ورود ===== -->
 <div id="login" class="page">
   <div class="form-wrap">
@@ -276,7 +243,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
   <div class="contact-wrap">
     <div class="contact-card">
       <div class="contact-title">ارتباط با ما</div>
-      <div class="contact-sub">برای فعال‌سازی حساب، سوالات یا پشتیبانی از طریق راه‌های زیر با ما در تماس باشید.</div>
+      <div class="notice" style="margin-bottom:20px;text-align:right;">✅ ثبت‌نام شما با موفقیت انجام شد. برای فعال‌سازی حساب کاربری، لطفاً از طریق یکی از راه‌های زیر با ما تماس بگیرید.</div><div class="contact-sub">برای فعال‌سازی حساب، سوالات یا پشتیبانی از طریق راه‌های زیر با ما در تماس باشید.</div>
       <div class="contact-items">
         <div class="contact-item">
           <div class="contact-item-icon" style="background:#E6F1FB;">✈️</div>
