@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RezTeam — پنل مدیریت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Vazirmatn', sans-serif; background: #f4f4f2; color: #1a1a1a; direction: rtl; }
+
+/* ===== LOGIN ===== */
+#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #0F1E1A; padding: 20px; }
+.login-box { background: #fff; border-radius: 18px; padding: 40px; width: 100%; max-width: 400px; }
+.login-logo { display: flex; align-items: center; gap: 9px; justify-content: center; margin-bottom: 8px; }
+.login-logo .dot { width: 12px; height: 12px; border-radius: 50%; background: #1D9E75; }
+.login-logo .name { font-size: 22px; font-weight: 700; }
+.login-title { text-align: center; font-size: 15px; color: #888; margin-bottom: 28px; }
+.login-field { margin-bottom: 16px; }
+.login-field label { font-size: 13px; color: #555; display: block; margin-bottom: 6px; font-weight: 500; }
+.login-field input { width: 100%; padding: 11px 14px; border: 1px solid #ddd; border-radius: 9px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; background: #fafafa; outline: none; }
+.login-field input:focus { border-color: #1D9E75; background: #fff; }
+.login-btn { width: 100%; padding: 12px; background: #1D9E75; color: #fff; border: none; border-radius: 9px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: 'Vazirmatn', sans-serif; margin-top: 8px; }
+.login-btn:hover { background: #0F6E56; }
+.login-err { background: #FCEBEB; color: #A32D2D; font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; display: none; }
+.login-hint { text-align: center; font-size: 12px; color: #aaa; margin-top: 18px; }
+
+/* ===== APP LAYOUT ===== */
+#admin-app { display: none; min-height: 100vh; }
+.admin-layout { display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.admin-sidebar { width: 240px; background: #0F1E1A; color: #cfd8d4; flex-shrink: 0; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; }
+.admin-brand { padding: 22px 24px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 9px; }
+.admin-brand .dot { width: 11px; height: 11px; border-radius: 50%; background: #1D9E75; }
+.admin-brand .name { font-size: 18px; font-weight: 700; color: #fff; }
+.admin-brand .tag { font-size: 11px; color: #6f8079; margin-right: auto; }
+.admin-menu { list-style: none; padding: 14px 0; flex: 1; overflow-y: auto; }
+.admin-menu-label { font-size: 11px; color: #5f6f68; padding: 12px 24px 6px; font-weight: 600; }
+.admin-menu-item { display: flex; align-items: center; gap: 11px; padding: 11px 24px; font-size: 14px; cursor: pointer; color: #cfd8d4; border-right: 3px solid transparent; transition: all 0.15s; }
+.admin-menu-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+.admin-menu-item.active { background: rgba(29,158,117,0.15); color: #fff; border-right-color: #1D9E75; font-weight: 600; }
+.admin-menu-item .icon { font-size: 18px; width: 22px; text-align: center; }
+.admin-menu-item .count { margin-right: auto; background: #1D9E75; color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+.admin-menu-item .count.amber { background: #F5B800; }
+
+/* MAIN */
+.admin-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.admin-topbar { background: #fff; border-bottom: 1px solid #e8e8e8; padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.admin-topbar h1 { font-size: 19px; font-weight: 700; }
+.admin-topbar .right { display: flex; align-items: center; gap: 16px; }
+.admin-clock { font-size: 13px; color: #888; }
+.admin-user-chip { display: flex; align-items: center; gap: 9px; background: #f4f4f2; padding: 6px 14px 6px 6px; border-radius: 30px; }
+.admin-user-chip .av { width: 30px; height: 30px; border-radius: 50%; background: #1D9E75; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.admin-user-chip .nm { font-size: 13px; font-weight: 600; }
+.logout-btn { background: transparent; border: 1px solid #ddd; padding: 7px 14px; border-radius: 8px; font-size: 13px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; color: #A32D2D; }
+.logout-btn:hover { background: #FCEBEB; border-color: #F09595; }
+
+.admin-content { padding: 28px; flex: 1; }
+.admin-section { display: none; }
+.admin-section.active { display: block; }
+
+/* STAT CARDS */
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-box { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 20px; }
+.stat-box .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.stat-box .ic { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.stat-box .trend { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 20px; }
+.stat-box .trend.up { background: #E1F5EE; color: #0F6E56; }
+.stat-box .trend.down { background: #FCEBEB; color: #A32D2D; }
+.stat-box .lbl { font-size: 13px; color: #888; margin-bottom: 4px; }
+.stat-box .val { font-size: 24px; font-weight: 700; }
+
+/* CHARTS */
+.chart-row { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; margin-bottom: 24px; }
+.chart-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 22px; }
+.chart-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.chart-card .sub { font-size: 12px; color: #888; margin-bottom: 18px; }
+.chart-wrap { position: relative; height: 260px; }
+.chart-wrap.sm { height: 220px; }
+
+/* CARD / TABLE */
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; overflow: hidden; margin-bottom: 24px; }
+.card-head { padding: 18px 22px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.card-head h3 { font-size: 15px; font-weight: 700; }
+.card-head .sub { font-size: 12px; color: #888; margin-top: 2px; }
+.btn { padding: 9px 18px; border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Vazirmatn', sans-serif; border: none; }
+.btn-primary { background: #1D9E75; color: #fff; }
+.btn-primary:hover { background: #0F6E56; }
+.btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 7px; }
+.btn-ghost { background: transparent; border: 1px solid #ddd; color: #1a1a1a; }
+.btn-ghost:hover { background: #f4f4f2; }
+
+table { width: 100%; border-collapse: collapse; }
+thead th { background: #fafaf8; font-size: 12px; color: #888; font-weight: 600; text-align: right; padding: 12px 18px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; }
+tbody td { padding: 14px 18px; font-size: 13px; border-bottom: 1px solid #f4f4f4; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #fafafa; }
+.badge { font-size: 11px; padding: 4px 11px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
+.badge.green { background: #E1F5EE; color: #0F6E56; }
+.badge.amber { background: #FAEEDA; color: #854F0B; }
+.badge.red { background: #FCEBEB; color: #A32D2D; }
+.badge.gray { background: #EEEEEC; color: #555; }
+.badge.blue { background: #E6F1FB; color: #185FA5; }
+.act-group { display: flex; gap: 6px; }
+.act { padding: 5px 11px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; font-family: 'Vazirmatn', sans-serif; }
+.act.approve { background: #E1F5EE; color: #0F6E56; }
+.act.approve:hover { background: #1D9E75; color: #fff; }
+.act.reject { background: #FCEBEB; color: #A32D2D; }
+.act.reject:hover { background: #E24B4A; color: #fff; }
+.act.edit { background: #E6F1FB; color: #185FA5; }
+.act.edit:hover { background: #378ADD; color: #fff; }
+.act.view { background: #EEEEEC; color: #555; }
+.act.view:hover { background: #ddd; }
+
+.user-cell { display: flex; align-items: center; gap: 10px; }
+.user-cell .av { width: 34px; height: 34px; border-radius: 50%; background: #E1F5EE; color: #0F6E56; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.user-cell .info .nm { font-weight: 600; font-size: 13px; }
+.user-cell .info .un { font-size: 11px; color: #999; }
+.mono { font-family: 'Vazirmatn', monospace; direction: ltr; display: inline-block; }
+
+/* FILTER BAR */
+.filter-bar { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+.filter-bar input, .filter-bar select { padding: 9px 14px; border: 1px solid #ddd; border-radius: 9px; font-size: 13px; font-family: 'Vazirmatn', sans-serif; background: #fff; outline: none; }
+.filter-bar input:focus, .filter-bar select:focus { border-color: #1D9E75; }
+.filter-bar input { flex: 1; min-width: 200px; }
+
+/* PLAN GRID */
+.plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.plan-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 20px; }
+.plan-card.special { border-color: #F5B800; border-width: 2px; }
+.plan-card .ph { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.plan-card .pic { width: 44px; height: 44px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.plan-card .pn { font-size: 15px; font-weight: 700; }
+.plan-card .pc { font-size: 11px; color: #888; }
+.plan-row { display: flex; justify-content: space-between; padding: 7px 0; font-size: 13px; border-bottom: 1px solid #f4f4f4; }
+.plan-row:last-of-type { border-bottom: none; }
+.plan-row .k { color: #888; }
+.plan-row .v { font-weight: 600; }
+.plan-row .v.green { color: #0F6E56; }
+.plan-actions { display: flex; gap: 8px; margin-top: 16px; }
+.plan-special-tag { background: #FFF8E6; color: #7A5500; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px; }
+
+/* MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,30,26,0.55); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.show { display: flex; }
+.modal { background: #fff; border-radius: 16px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+.modal-head { padding: 20px 24px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: #fff; }
+.modal-head h3 { font-size: 17px; font-weight: 700; }
+.modal-close { background: transparent; border: none; font-size: 22px; cursor: pointer; color: #999; line-height: 1; }
+.modal-body { padding: 24px; }
+.modal-foot { padding: 16px 24px; border-top: 1px solid #f0f0f0; display: flex; gap: 10px; justify-content: flex-start; position: sticky; bottom: 0; background: #fff; }
+.form-field { margin-bottom: 16px; }
+.form-field label { font-size: 13px; color: #555; display: block; margin-bottom: 6px; font-weight: 500; }
+.form-field input, .form-field select, .form-field textarea { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 9px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; background: #fafafa; outline: none; }
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #1D9E75; background: #fff; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.gen-pass { font-size: 12px; color: #1D9E75; cursor: pointer; font-weight: 600; }
+
+@media (max-width: 900px) {
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+  .chart-row { grid-template-columns: 1fr; }
+  .plan-grid { grid-template-columns: 1fr; }
+  .admin-sidebar { width: 70px; }
+  .admin-brand .name, .admin-brand .tag, .admin-menu-label, .admin-menu-item span:not(.icon):not(.count) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="dot"></div>
+      <div class="name">RezTeam</div>
+    </div>
+    <div class="login-title">پنل مدیریت</div>
+    <div class="login-err" id="login-err">نام کاربری یا رمز عبور اشتباه است.</div>
+    <div class="login-field">
+      <label>نام کاربری</label>
+      <input type="text" id="admin-username" placeholder="نام کاربری مدیر" />
+    </div>
+    <div class="login-field">
+      <label>رمز عبور</label>
+      <input type="password" id="admin-password" placeholder="رمز عبور" onkeydown="if(event.key==='Enter')adminLogin()" />
+    </div>
+    <button class="login-btn" onclick="adminLogin()">ورود به پنل</button>
+    <div class="login-hint">نسخه نمایشی · admin / admin123</div>
+  </div>
+</div>
+
+<!-- ===== ADMIN APP ===== -->
+<div id="admin-app">
+  <div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="dot"></div>
+        <div class="name">RezTeam</div>
+        <div class="tag">ادمین</div>
+      </div>
+      <ul class="admin-menu">
+        <div class="admin-menu-label">اصلی</div>
+        <li class="admin-menu-item active" onclick="showSection('dashboard', this)">
+          <span class="icon">📊</span> <span>داشبورد</span>
+        </li>
+        <li class="admin-menu-item" onclick="showSection('users', this)">
+          <span class="icon">👥</span> <span>مدیریت کاربران</span> <span class="count">1,284</span>
+        </li>
+        <li class="admin-menu-item" onclick="showSection('plans', this)">
+          <span class="icon">📈</span> <span>طرح‌های سرمایه‌گذاری</span>
+        </li>
+        <div class="admin-menu-label">درخواست‌ها</div>
+        <li class="admin-menu-item" onclick="showSection('requests', this)">
+          <span class="icon">⏳</span> <span>تأیید درخواست‌ها</span> <span class="count amber">12</span>
+        </li>
+        <li class="admin-menu-item" onclick="showSection('investments', this)">
+          <span class="icon">💼</span> <span>سرمایه‌گذاری‌ها</span>
+        </li>
+        <li class="admin-menu-item" onclick="showSection('loans', this)">
+          <span class="icon">🏦</span> <span>وام‌ها</span> <span class="count amber">4</span>
+        </li>
+        <div class="admin-menu-label">مالی</div>
+        <li class="admin-menu-item" onclick="showSection('transactions', this)">
+          <span class="icon">💳</span> <span>تراکنش‌ها</span>
+        </li>
+        <li class="admin-menu-item" onclick="showSection('settings', this)">
+          <span class="icon">⚙️</span> <span>تنظیمات</span>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <h1 id="page-title">داشبورد</h1>
+        <div class="right">
+          <div class="admin-clock" id="admin-clock"></div>
+          <div class="admin-user-chip">
+            <div class="av">م</div>
+            <div class="nm">مدیر سیستم</div>
+          </div>
+          <button class="logout-btn" onclick="adminLogout()">خروج</button>
+        </div>
+      </div>
+
+      <div class="admin-content">
+
+        <!-- ===== DASHBOARD ===== -->
+        <div id="dashboard" class="admin-section active">
+          <div class="stat-row">
+            <div class="stat-box">
+              <div class="top">
+                <div class="ic" style="background:#E1F5EE;">👥</div>
+                <span class="trend up">+۸٪</span>
+              </div>
+              <div class="lbl">کاربران فعال</div>
+              <div class="val">1,284</div>
+            </div>
+            <div class="stat-box">
+              <div class="top">
+                <div class="ic" style="background:#E6F1FB;">💰</div>
+                <span class="trend up">+۱۲٪</span>
+              </div>
+              <div class="lbl">کل سرمایه (تومان)</div>
+              <div class="val">42,800,000,000</div>
+            </div>
+            <div class="stat-box">
+              <div class="top">
+                <div class="ic" style="background:#FAEEDA;">📤</div>
+                <span class="trend up">+۵٪</span>
+              </div>
+              <div class="lbl">سود پرداختی این ماه</div>
+              <div class="val">1,340,000,000</div>
+            </div>
+            <div class="stat-box">
+              <div class="top">
+                <div class="ic" style="background:#FCEBEB;">⏳</div>
+                <span class="trend down">۱۲ مورد</span>
+              </div>
+              <div class="lbl">درخواست‌های در انتظار</div>
+              <div class="val">12</div>
+            </div>
+          </div>
+
+          <div class="chart-row">
+            <div class="chart-card">
+              <h3>رشد سرمایه کل</h3>
+              <div class="sub">روند ۶ ماه اخیر (میلیارد تومان)</div>
+              <div class="chart-wrap"><canvas id="growthChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+              <h3>توزیع سرمایه‌گذاری</h3>
+              <div class="sub">بر اساس نوع طرح</div>
+              <div class="chart-wrap sm"><canvas id="distChart"></canvas></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>آخرین درخواست‌ها</h3>
+                <div class="sub">درخواست‌هایی که منتظر بررسی هستند</div>
+              </div>
+              <button class="btn btn-ghost btn-sm" onclick="showSection('requests', document.querySelectorAll('.admin-menu-item')[3])">مشاهده همه</button>
+            </div>
+            <table>
+              <thead>
+                <tr><th>کاربر</th><th>نوع</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th><th>عملیات</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ع</div><div class="info"><div class="nm">علی محمدی</div><div class="un">ali_m</div></div></div></td>
+                  <td><span class="badge blue">شارژ حساب</span></td>
+                  <td>100,000,000 ت</td>
+                  <td class="mono">1404/04/01</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">س</div><div class="info"><div class="nm">سارا کریمی</div><div class="un">sara_k</div></div></div></td>
+                  <td><span class="badge gray">برداشت</span></td>
+                  <td>10 گرم طلا</td>
+                  <td class="mono">1404/04/02</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">م</div><div class="info"><div class="nm">مهدی رضایی</div><div class="un">mehdi_r</div></div></div></td>
+                  <td><span class="badge green">سرمایه‌گذاری</span></td>
+                  <td>50,000,000 ت</td>
+                  <td class="mono">1404/04/02</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== USERS ===== -->
+        <div id="users" class="admin-section">
+          <div class="filter-bar">
+            <input type="text" placeholder="جستجوی نام، نام کاربری یا کد ملی..." />
+            <select><option>همه وضعیت‌ها</option><option>فعال</option><option>غیرفعال</option><option>در انتظار تأیید</option></select>
+            <button class="btn btn-primary" onclick="openModal('user-modal')">+ کاربر جدید</button>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr><th>کاربر</th><th>موبایل</th><th>موجودی تومان</th><th>موجودی USDT</th><th>طلا (گرم)</th><th>وضعیت</th><th>عملیات</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ر</div><div class="info"><div class="nm">رضا جلیلیان</div><div class="un">reza_j</div></div></div></td>
+                  <td class="mono">0912***4567</td>
+                  <td>85,000,000</td><td>320</td><td>4.5</td>
+                  <td><span class="badge green">فعال</span></td>
+                  <td><div class="act-group"><button class="act edit" onclick="openModal('user-modal')">ویرایش</button><button class="act view">مشاهده</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ع</div><div class="info"><div class="nm">علی محمدی</div><div class="un">ali_m</div></div></div></td>
+                  <td class="mono">0935***1122</td>
+                  <td>12,000,000</td><td>0</td><td>0</td>
+                  <td><span class="badge green">فعال</span></td>
+                  <td><div class="act-group"><button class="act edit" onclick="openModal('user-modal')">ویرایش</button><button class="act view">مشاهده</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">س</div><div class="info"><div class="nm">سارا کریمی</div><div class="un">sara_k</div></div></div></td>
+                  <td class="mono">0901***8899</td>
+                  <td>250,000,000</td><td>1,200</td><td>15</td>
+                  <td><span class="badge green">فعال</span></td>
+                  <td><div class="act-group"><button class="act edit" onclick="openModal('user-modal')">ویرایش</button><button class="act view">مشاهده</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ن</div><div class="info"><div class="nm">نیما اکبری</div><div class="un">nima_a</div></div></div></td>
+                  <td class="mono">0917***3344</td>
+                  <td>0</td><td>0</td><td>0</td>
+                  <td><span class="badge gray">غیرفعال</span></td>
+                  <td><div class="act-group"><button class="act edit" onclick="openModal('user-modal')">ویرایش</button><button class="act view">مشاهده</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== PLANS ===== -->
+        <div id="plans" class="admin-section">
+          <div class="filter-bar">
+            <input type="text" placeholder="جستجوی طرح..." />
+            <button class="btn btn-primary" onclick="openModal('plan-modal')">+ طرح جدید</button>
+          </div>
+          <div class="plan-grid">
+            <div class="plan-card">
+              <div class="ph"><div class="pic" style="background:#E1F5EE;">🥇</div><div><div class="pn">سرمایه‌گذاری طلا</div><div class="pc">ارز: گرم طلا</div></div></div>
+              <div class="plan-row"><span class="k">حداقل</span><span class="v">5 گرم</span></div>
+              <div class="plan-row"><span class="k">حداکثر</span><span class="v">50 گرم</span></div>
+              <div class="plan-row"><span class="k">سود</span><span class="v green">3.2% ماهانه</span></div>
+              <div class="plan-row"><span class="k">پرداخت</span><span class="v">ماهانه</span></div>
+              <div class="plan-actions"><button class="btn btn-ghost btn-sm" onclick="openModal('plan-modal')" style="flex:1;">ویرایش</button><button class="act reject">حذف</button></div>
+            </div>
+            <div class="plan-card">
+              <div class="ph"><div class="pic" style="background:#E6F1FB;">🏪</div><div><div class="pn">فروشگاه زنجیره‌ای</div><div class="pc">ارز: تومان</div></div></div>
+              <div class="plan-row"><span class="k">حداقل</span><span class="v">10,000,000 ت</span></div>
+              <div class="plan-row"><span class="k">حداکثر</span><span class="v">500,000,000 ت</span></div>
+              <div class="plan-row"><span class="k">سود</span><span class="v green">4% سه‌ماهه</span></div>
+              <div class="plan-row"><span class="k">پرداخت</span><span class="v">هر ۳ ماه</span></div>
+              <div class="plan-actions"><button class="btn btn-ghost btn-sm" onclick="openModal('plan-modal')" style="flex:1;">ویرایش</button><button class="act reject">حذف</button></div>
+            </div>
+            <div class="plan-card">
+              <div class="ph"><div class="pic" style="background:#FAEEDA;">💵</div><div><div class="pn">سرمایه‌گذاری دلاری</div><div class="pc">ارز: USDT</div></div></div>
+              <div class="plan-row"><span class="k">حداقل</span><span class="v">100 دلار</span></div>
+              <div class="plan-row"><span class="k">حداکثر</span><span class="v">10,000 دلار</span></div>
+              <div class="plan-row"><span class="k">سود</span><span class="v green">2.5% ماهانه</span></div>
+              <div class="plan-row"><span class="k">پرداخت</span><span class="v">ماهانه</span></div>
+              <div class="plan-actions"><button class="btn btn-ghost btn-sm" onclick="openModal('plan-modal')" style="flex:1;">ویرایش</button><button class="act reject">حذف</button></div>
+            </div>
+            <div class="plan-card">
+              <div class="ph"><div class="pic" style="background:#EEEDFE;">🏗️</div><div><div class="pn">پروژه ساختمانی</div><div class="pc">ارز: تومان</div></div></div>
+              <div class="plan-row"><span class="k">حداقل</span><span class="v">50,000,000 ت</span></div>
+              <div class="plan-row"><span class="k">حداکثر</span><span class="v">1,000,000,000 ت</span></div>
+              <div class="plan-row"><span class="k">سود</span><span class="v green">5% ماهانه</span></div>
+              <div class="plan-row"><span class="k">پرداخت</span><span class="v">ماهانه</span></div>
+              <div class="plan-actions"><button class="btn btn-ghost btn-sm" onclick="openModal('plan-modal')" style="flex:1;">ویرایش</button><button class="act reject">حذف</button></div>
+            </div>
+            <div class="plan-card special">
+              <span class="plan-special-tag">⭐ پیشنهاد ویژه</span>
+              <div class="ph"><div class="pic" style="background:#FFF8E6;">🏆</div><div><div class="pn">سرمایه‌گذاری VIP</div><div class="pc">ارز: تومان · USDT</div></div></div>
+              <div class="plan-row"><span class="k">حداقل</span><span class="v">100,000,000 ت</span></div>
+              <div class="plan-row"><span class="k">حداکثر</span><span class="v">نامحدود</span></div>
+              <div class="plan-row"><span class="k">سود</span><span class="v green">7% ماهانه</span></div>
+              <div class="plan-row"><span class="k">ظرفیت</span><span class="v">3 نفر</span></div>
+              <div class="plan-actions"><button class="btn btn-ghost btn-sm" onclick="openModal('plan-modal')" style="flex:1;">ویرایش</button><button class="act reject">حذف</button></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== REQUESTS ===== -->
+        <div id="requests" class="admin-section">
+          <div class="filter-bar">
+            <input type="text" placeholder="جستجوی کاربر..." />
+            <select><option>همه انواع</option><option>شارژ حساب</option><option>برداشت</option><option>سرمایه‌گذاری</option></select>
+            <select><option>در انتظار</option><option>تأیید شده</option><option>رد شده</option></select>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr><th>کاربر</th><th>نوع درخواست</th><th>ارز</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th><th>عملیات</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ع</div><div class="info"><div class="nm">علی محمدی</div><div class="un">ali_m</div></div></div></td>
+                  <td><span class="badge blue">شارژ حساب</span></td>
+                  <td>تومان</td><td>100,000,000</td>
+                  <td class="mono">1404/04/01</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">س</div><div class="info"><div class="nm">سارا کریمی</div><div class="un">sara_k</div></div></div></td>
+                  <td><span class="badge gray">برداشت</span></td>
+                  <td>طلا</td><td>10 گرم</td>
+                  <td class="mono">1404/04/02</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">م</div><div class="info"><div class="nm">مهدی رضایی</div><div class="un">mehdi_r</div></div></div></td>
+                  <td><span class="badge green">سرمایه‌گذاری</span></td>
+                  <td>تومان</td><td>50,000,000</td>
+                  <td class="mono">1404/04/02</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ز</div><div class="info"><div class="nm">زهرا حسینی</div><div class="un">zahra_h</div></div></div></td>
+                  <td><span class="badge blue">شارژ حساب</span></td>
+                  <td>USDT</td><td>500</td>
+                  <td class="mono">1404/04/03</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== INVESTMENTS ===== -->
+        <div id="investments" class="admin-section">
+          <div class="filter-bar">
+            <input type="text" placeholder="جستجوی کاربر یا طرح..." />
+            <select><option>همه طرح‌ها</option><option>طلا</option><option>فروشگاه</option><option>دلاری</option><option>ساختمانی</option><option>VIP</option></select>
+            <select><option>همه وضعیت‌ها</option><option>فعال</option><option>پایان‌یافته</option></select>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr><th>کاربر</th><th>طرح</th><th>مبلغ</th><th>سود پرداختی</th><th>واریز بعدی</th><th>وضعیت</th><th>عملیات</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ر</div><div class="info"><div class="nm">رضا جلیلیان</div><div class="un">reza_j</div></div></div></td>
+                  <td><span class="badge green">طلا</span></td>
+                  <td>50,000,000 ت</td>
+                  <td style="color:#0F6E56;">3,200,000 ت</td>
+                  <td class="mono">1404/04/10</td>
+                  <td><span class="badge green">فعال</span></td>
+                  <td><button class="act approve">واریز سود</button></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ر</div><div class="info"><div class="nm">رضا جلیلیان</div><div class="un">reza_j</div></div></div></td>
+                  <td><span class="badge blue">فروشگاه</span></td>
+                  <td>35,000,000 ت</td>
+                  <td style="color:#0F6E56;">1,600,000 ت</td>
+                  <td class="mono">1404/06/01</td>
+                  <td><span class="badge green">فعال</span></td>
+                  <td><button class="act approve">واریز سود</button></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">س</div><div class="info"><div class="nm">سارا کریمی</div><div class="un">sara_k</div></div></div></td>
+                  <td><span class="badge amber">VIP</span></td>
+                  <td>200,000,000 ت</td>
+                  <td style="color:#0F6E56;">14,000,000 ت</td>
+                  <td class="mono">1404/04/15</td>
+                  <td><span class="badge green">فعال</span></td>
+                  <td><button class="act approve">واریز سود</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== LOANS ===== -->
+        <div id="loans" class="admin-section">
+          <div class="filter-bar">
+            <input type="text" placeholder="جستجوی کاربر..." />
+            <select><option>در انتظار</option><option>تأیید شده</option><option>رد شده</option></select>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr><th>کاربر</th><th>مبلغ وام</th><th>قسط ماهانه</th><th>تعداد اقساط</th><th>ارز</th><th>تاریخ</th><th>وضعیت</th><th>عملیات</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="user-cell"><div class="av">م</div><div class="info"><div class="nm">مهدی رضایی</div><div class="un">mehdi_r</div></div></div></td>
+                  <td>50,000,000 ت</td><td>5,000,000 ت</td><td>12</td><td>تومان</td>
+                  <td class="mono">1404/04/01</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="av">ن</div><div class="info"><div class="nm">نیما اکبری</div><div class="un">nima_a</div></div></div></td>
+                  <td>100,000,000 ت</td><td>10,000,000 ت</td><td>10</td><td>تومان</td>
+                  <td class="mono">1404/04/03</td>
+                  <td><span class="badge amber">در انتظار</span></td>
+                  <td><div class="act-group"><button class="act approve">تأیید</button><button class="act reject">رد</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== TRANSACTIONS ===== -->
+        <div id="transactions" class="admin-section">
+          <div class="filter-bar">
+            <input type="text" placeholder="جستجوی کاربر..." />
+            <select><option>همه انواع</option><option>واریز سود</option><option>شارژ</option><option>برداشت</option></select>
+            <select><option>همه ارزها</option><option>تومان</option><option>USDT</option><option>طلا</option></select>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr><th>شناسه</th><th>کاربر</th><th>نوع</th><th>ارز</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="mono">#TX1042</td>
+                  <td><div class="user-cell"><div class="av">ر</div><div class="info"><div class="nm">رضا جلیلیان</div><div class="un">reza_j</div></div></div></td>
+                  <td><span class="badge green">واریز سود</span></td>
+                  <td>تومان</td><td style="color:#0F6E56;">+1,600,000</td>
+                  <td class="mono">1404/04/10</td>
+                  <td><span class="badge green">موفق</span></td>
+                </tr>
+                <tr>
+                  <td class="mono">#TX1041</td>
+                  <td><div class="user-cell"><div class="av">س</div><div class="info"><div class="nm">سارا کریمی</div><div class="un">sara_k</div></div></div></td>
+                  <td><span class="badge blue">شارژ</span></td>
+                  <td>USDT</td><td style="color:#0F6E56;">+500</td>
+                  <td class="mono">1404/04/09</td>
+                  <td><span class="badge green">موفق</span></td>
+                </tr>
+                <tr>
+                  <td class="mono">#TX1040</td>
+                  <td><div class="user-cell"><div class="av">ع</div><div class="info"><div class="nm">علی محمدی</div><div class="un">ali_m</div></div></div></td>
+                  <td><span class="badge gray">برداشت</span></td>
+                  <td>تومان</td><td style="color:#A32D2D;">-20,000,000</td>
+                  <td class="mono">1404/04/08</td>
+                  <td><span class="badge green">موفق</span></td>
+                </tr>
+                <tr>
+                  <td class="mono">#TX1039</td>
+                  <td><div class="user-cell"><div class="av">ر</div><div class="info"><div class="nm">رضا جلیلیان</div><div class="un">reza_j</div></div></div></td>
+                  <td><span class="badge green">واریز سود</span></td>
+                  <td>طلا</td><td style="color:#0F6E56;">+0.15 گرم</td>
+                  <td class="mono">1404/04/07</td>
+                  <td><span class="badge green">موفق</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== SETTINGS ===== -->
+        <div id="settings" class="admin-section">
+          <div class="card" style="max-width:600px;">
+            <div class="card-head"><div><h3>اطلاعات تماس سایت</h3><div class="sub">این اطلاعات در صفحه ارتباط با ما نمایش داده می‌شود</div></div></div>
+            <div style="padding:22px;">
+              <div class="form-field"><label>آیدی تلگرام</label><input type="text" value="@RezTeam_Support" /></div>
+              <div class="form-field"><label>شماره واتساپ</label><input type="text" value="+98 912 000 0000" /></div>
+              <button class="btn btn-primary">ذخیره تغییرات</button>
+            </div>
+          </div>
+          <div class="card" style="max-width:600px;">
+            <div class="card-head"><div><h3>تغییر رمز عبور مدیر</h3></div></div>
+            <div style="padding:22px;">
+              <div class="form-field"><label>رمز عبور فعلی</label><input type="password" /></div>
+              <div class="form-field"><label>رمز عبور جدید</label><input type="password" /></div>
+              <button class="btn btn-primary">تغییر رمز</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== USER MODAL ===== -->
+<div class="modal-overlay" id="user-modal">
+  <div class="modal">
+    <div class="modal-head"><h3>افزودن / ویرایش کاربر</h3><button class="modal-close" onclick="closeModal('user-modal')">&times;</button></div>
+    <div class="modal-body">
+      <div class="form-field"><label>نام و نام خانوادگی</label><input type="text" placeholder="رضا احمدی" /></div>
+      <div class="form-row">
+        <div class="form-field"><label>نام کاربری</label><input type="text" placeholder="reza_a" /></div>
+        <div class="form-field"><label>رمز عبور <span class="gen-pass" onclick="genPass()">تولید خودکار</span></label><input type="text" id="gen-pass-field" placeholder="رمز عبور" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>شماره موبایل</label><input type="text" placeholder="09123456789" /></div>
+        <div class="form-field"><label>کد ملی</label><input type="text" placeholder="0123456789" /></div>
+      </div>
+      <div class="form-field"><label>موجودی اولیه</label>
+        <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;">
+          <input type="text" placeholder="تومان" />
+          <input type="text" placeholder="USDT" />
+          <input type="text" placeholder="طلا (گرم)" />
+        </div>
+      </div>
+      <div class="form-field"><label>وضعیت</label><select><option>فعال</option><option>غیرفعال</option></select></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-primary" onclick="closeModal('user-modal')">ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeModal('user-modal')">انصراف</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PLAN MODAL ===== -->
+<div class="modal-overlay" id="plan-modal">
+  <div class="modal">
+    <div class="modal-head"><h3>افزودن / ویرایش طرح</h3><button class="modal-close" onclick="closeModal('plan-modal')">&times;</button></div>
+    <div class="modal-body">
+      <div class="form-field"><label>نام طرح</label><input type="text" placeholder="سرمایه‌گذاری طلا" /></div>
+      <div class="form-field"><label>ارز</label><select><option>تومان</option><option>USDT</option><option>طلا (گرم)</option></select></div>
+      <div class="form-row">
+        <div class="form-field"><label>حداقل سرمایه</label><input type="text" placeholder="5" /></div>
+        <div class="form-field"><label>حداکثر سرمایه</label><input type="text" placeholder="50" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>درصد سود</label><input type="text" placeholder="3.2" /></div>
+        <div class="form-field"><label>دوره پرداخت سود</label><select><option>ماهانه</option><option>هر ۳ ماه</option><option>هر ۶ ماه</option><option>سالانه</option></select></div>
+      </div>
+      <div class="form-field"><label>توضیحات</label><textarea rows="3" placeholder="توضیحات کامل طرح..."></textarea></div>
+      <div class="form-field"><label><input type="checkbox" style="width:auto;margin-left:6px;" /> این طرح پیشنهاد ویژه است</label></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-primary" onclick="closeModal('plan-modal')">ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeModal('plan-modal')">انصراف</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== AUTH =====
+function adminLogin() {
+  var u = document.getElementById('admin-username').value;
+  var p = document.getElementById('admin-password').value;
+  if (u === 'admin' && p === 'admin123') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'block';
+    initCharts();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+function adminLogout() {
+  document.getElementById('admin-app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-password').value = '';
+  document.getElementById('login-err').style.display = 'none';
+}
+
+// ===== NAVIGATION =====
+var titles = {dashboard:'داشبورد', users:'مدیریت کاربران', plans:'طرح‌های سرمایه‌گذاری', requests:'تأیید درخواست‌ها', investments:'سرمایه‌گذاری‌ها', loans:'وام‌ها', transactions:'تراکنش‌ها', settings:'تنظیمات'};
+function showSection(id, el) {
+  document.querySelectorAll('.admin-section').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.admin-menu-item').forEach(function(i){ i.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  document.getElementById('page-title').textContent = titles[id] || '';
+}
+
+// ===== MODALS =====
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+function genPass() {
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+  var p = '';
+  for (var i=0;i<10;i++) p += chars.charAt(Math.floor(Math.random()*chars.length));
+  document.getElementById('gen-pass-field').value = p;
+}
+
+// ===== CLOCK =====
+function updateClock() {
+  var now = new Date();
+  var t = now.toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit'});
+  try {
+    var d = now.toLocaleDateString('fa-IR', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
+    document.getElementById('admin-clock').textContent = d + ' · ' + t;
+  } catch(e) { document.getElementById('admin-clock').textContent = t; }
+}
+setInterval(updateClock, 1000); updateClock();
+
+// ===== CHARTS =====
+var chartsDone = false;
+function initCharts() {
+  if (chartsDone) return; chartsDone = true;
+  var g = document.getElementById('growthChart');
+  new Chart(g, {
+    type: 'line',
+    data: {
+      labels: ['بهمن','اسفند','فروردین','اردیبهشت','خرداد','تیر'],
+      datasets: [{
+        label: 'سرمایه کل',
+        data: [28, 31, 34, 37, 40, 42.8],
+        borderColor: '#1D9E75',
+        backgroundColor: 'rgba(29,158,117,0.08)',
+        fill: true, tension: 0.35, borderWidth: 2,
+        pointBackgroundColor: '#1D9E75', pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { ticks: { font: { family: 'Vazirmatn' } }, grid: { color: '#f0f0f0' } },
+        x: { ticks: { font: { family: 'Vazirmatn' } }, grid: { display: false } }
+      }
+    }
+  });
+  var d = document.getElementById('distChart');
+  new Chart(d, {
+    type: 'doughnut',
+    data: {
+      labels: ['طلا','فروشگاه','دلاری','ساختمانی','VIP'],
+      datasets: [{
+        data: [30, 25, 15, 20, 10],
+        backgroundColor: ['#1D9E75','#378ADD','#EF9F27','#7F77DD','#F5B800'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: { legend: { position: 'bottom', labels: { font: { family: 'Vazirmatn', size: 12 }, padding: 14, usePointStyle: true } } }
+    }
+  });
+}
+</script>
+</body>
+</html>
